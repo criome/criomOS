@@ -13,10 +13,6 @@ let
       self = null;
     };
 
-    ementEl = {
-      lamdy = import ./ement-el;
-    };
-
     home-manager = {
       lamdy = import ./home-manager;
       modz = [ "lib" "pkgs" "hob" ];
@@ -107,16 +103,6 @@ let
       lamdy = import ./pkgsNvimPloginz;
       modz = [ "pkgsSet" "lib" "pkdjz" ];
       self = hob.nixpkgs;
-    };
-
-    ql2nix = {
-      lamdy = import ./ql2nix;
-      modz = [ "pkgsSet" ];
-    };
-
-    staticSbcl = {
-      lamdy = import ./sbcl/static.nix;
-      modz = [ "pkgsSet" "pkgsStatic" ];
     };
 
     shen-bootstrap = {

@@ -96,7 +96,6 @@ let
         l.elem spokNeim neksysWebpageSpokNames;
 
       optionalSystemAttributes = {
-        defaultPackage = fleik.defaultPackage.${system} or { };
         packages = fleik.packages.${system} or { };
         legacyPackages = fleik.legacyPackages.${system} or { };
       };
@@ -135,7 +134,7 @@ let
     then priMeikSobUyrld spokNeim fleik.SobUyrld
     else if (isWebpageSpok spokNeim)
     then mkZolaWebsite { src = fleik; }
-    else if hasFleikFile then makeFleik
+    # else if hasFleikFile then makeFleik
     else fleik // optionalSystemAttributes;
 
   uyrld = mapAttrs makeSpoke hob;

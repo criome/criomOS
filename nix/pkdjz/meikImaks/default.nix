@@ -24,26 +24,6 @@ let
         inherit src;
       };
 
-    ement =
-      let
-        src = hob.ement-el;
-      in
-      trivialBuild {
-        pname = "ement";
-        version = src.shortRev;
-        inherit src;
-        packageRequires = with emacsPackages; [
-          plz
-          cl-lib
-          ts
-          magit-section
-          taxy-magit-section
-          taxy
-          svg-lib
-          persist
-        ];
-      };
-
     magit-delta = emacsPackages.magit-delta.overrideAttrs
       (attrs: {
         buildInputs = attrs.buildInputs ++ [ pkgs.delta ];

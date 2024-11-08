@@ -1,4 +1,4 @@
-{ kor, pkgs, user, uyrld, pkdjz, ... }:
+{ kor, pkgs, user, pkdjz, ... }:
 let
   inherit (kor) optionals;
   inherit (user.spinyrz) izNiksDev izSemaDev saizAtList;
@@ -8,8 +8,6 @@ let
 
   semaDevPackages = with pkgs;
     [ krita calibre virt-manager gimp ];
-
-  allObsPlugins = pkgs.obs-studio-plugins // uyrld.arcnmxNixexprs.legacyPackages.obs-studio-plugins;
 
 in
 kor.mkIf saizAtList.max {
@@ -38,7 +36,7 @@ kor.mkIf saizAtList.max {
     obs-studio = {
       enable = true;
       plugins =
-        with allObsPlugins; [
+        with pkgs.obs-studio-plugins; [
           droidcam-obs
           wlrobs
           pkdjz.obs-ndi
