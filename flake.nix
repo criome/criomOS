@@ -1,7 +1,7 @@
 {
   description = "CriomOS";
 
-  inputs = { hob.url = "github:criome/hob/1Libra5918AM-update"; };
+  inputs = { hob.url = "github:criome/hob/17thScorpio5918AM"; };
 
   outputs = inputs@{ self, ... }:
     let
