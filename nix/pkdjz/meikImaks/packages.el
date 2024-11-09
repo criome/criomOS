@@ -12,9 +12,7 @@
 
 (use-package eglot
   :config
-  (add-to-list 'eglot-server-programs '(nix-ts-mode . ("nil")))
-  :hook
-  (nix-ts-mode . eglot-ensure))
+  (add-to-list 'eglot-server-programs '(nix-ts-mode . ("nil"))))
 
 (use-package flycheck-eglot
   :ensure t
