@@ -6,65 +6,67 @@ let
   inherit (profile) dark;
 
   badDomains = [
-    "https://www.reddit.com"
-    "https://www.goodreads.com"
-    "https://www.allmusic.com"
-    "https://www.imdb.com"
-    "https://rumble.com"
-    "https://astro-charts.com"
-    "https://www.amazon.com"
-    "https://twitter.com"
-    "https://canva.com"
+    "www.reddit.com"
+    "www.goodreads.com"
+    "www.allmusic.com"
+    "www.imdb.com"
+    "rumble.com"
+    "astro-charts.com"
+    "www.amazon.com"
+    "canva.com"
   ];
 
   undesirableDomains = [
-    "https://duckduckgo.com"
-    "https://www.cloudflare.com"
-    "https://dash.cloudflare.com"
-    "https://admin.gandi.net"
-    "https://cloud.linode.com"
-    "https://login.linode.com"
-    "https://github.com"
-    "https://bitbucket.org"
+    "duckduckgo.com"
+    "www.cloudflare.com"
+    "dash.cloudflare.com"
+    "admin.gandi.net"
+    "cloud.linode.com"
+    "login.linode.com"
+    "github.com"
+    "bitbucket.org"
   ];
 
   betterDomains = [
-    "https://gitlab.com"
-    "https://gitlab.gnome.org"
-    "https://gitlab.redox-os.org"
-    "https://gitlab.freedesktop.org"
-    "https://gitlab.e.foundation/e/apps"
-    "https://gitea.com"
-    "https://codeberg.org"
-    "https://source.puri.sm"
-    "https://clojure.org"
-    "https://crates.io"
-    "https://docs.rs"
-    "https://doc.rust-lang.org"
-    "https://rustc-dev-guide.rust-lang.org"
-    "https://rust-lang.github.io/async-book"
-    "https://hydra.nixos.org"
-    "https://download.lineageos.org"
-    "https://opengapps.org"
-    "https://postmarketos.org"
-    "https://odysee.com"
-    "https://mail.protonmail.com"
-    "https://login.protonmail.com"
-    "https://mail.proton.me"
-    "https://login.proton.me"
-    "https://account.proton.me"
-    "https://asciinema.org"
-    "https://cal.com"
-    "https://app.cal.com"
-    "https://meet.jit.si"
+    "gitlab.com"
+    "gitlab.gnome.org"
+    "gitlab.redox-os.org"
+    "gitlab.freedesktop.org"
+    "gitlab.e.foundation/e/apps"
+    "gitea.com"
+    "codeberg.org"
+    "source.puri.sm"
+    "clojuredocs.org"
+    "clojure.org"
+    "crates.io"
+    "docs.rs"
+    "doc.rust-lang.org"
+    "rustc-dev-guide.rust-lang.org"
+    "rust-lang.github.io/async-book"
+    "hydra.nixos.org"
+    "download.lineageos.org"
+    "opengapps.org"
+    "postmarketos.org"
+
+    "odysee.com"
+    "mail.protonmail.com"
+    "login.protonmail.com"
+    "mail.proton.me"
+    "login.proton.me"
+    "account.proton.me"
+    "asciinema.org"
+    "cal.com"
+    "app.cal.com"
+    "meet.jit.si"
   ];
 
   unsafeBadDomains = [
-    "https://*.google.com"
-    "https://*.youtube.com"
-    "https://*.aliexpress.com"
-    "https://*.locals.com"
-    "https://*.stripe.com"
+    "*.google.com"
+    "*.youtube.com"
+    "*.aliexpress.com"
+    "*.locals.com"
+    "*.stripe.com"
+    "*.x.com"
   ];
 
   unstrictWhitelist = unsafeBadDomains;
@@ -74,7 +76,7 @@ let
   whitelist = unstrictWhitelist ++ strictWhitelist;
 
   mkDomainString = domain:
-    "config.set('content.javascript.enabled', True, '${domain}/*')";
+    "config.set('content.javascript.enabled', True, 'https://${domain}/*')";
   mkDomainsList = map (domain: mkDomainString domain) whitelist;
   domainListBlok = builtins.concatStringsSep "\n" mkDomainsList;
 
