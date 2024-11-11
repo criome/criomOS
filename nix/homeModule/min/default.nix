@@ -422,16 +422,53 @@ mkIf saizAtList.min {
     };
   };
 
-  xdg.configFile = {
-    "fontconfig/conf.d/10-niksIuzyr-fonts.conf".text = mkFontConf;
+  xdg = {
+    configFile = {
+      "fontconfig/conf.d/10-niksIuzyr-fonts.conf".text = mkFontConf;
 
-    "jj/config.toml".source = kynvyrt {
-      neim = "jujutsuConfigToml";
-      format = "toml";
-      valiu.user = {
-        name = neim;
-        email = matrixID;
+      "jj/config.toml".source = kynvyrt {
+        neim = "jujutsuConfigToml";
+        format = "toml";
+        valiu.user = {
+          name = neim;
+          email = matrixID;
+        };
       };
     };
+
+    mimeApps = {
+      enable = true;
+      defaultApplications =
+        let
+          defaultBrowser = "chromium.desktop";
+          defaultMailer = "evolution.desktop";
+        in
+        {
+          "text/html" = defaultBrowser;
+          "x-scheme-handler/http" = defaultBrowser;
+          "x-scheme-handler/https" = defaultBrowser;
+          "x-scheme-handler/ftp" = defaultBrowser;
+          "x-scheme-handler/chrome" = defaultBrowser;
+          "application/x-extension-htm" = defaultBrowser;
+          "application/x-extension-html" = defaultBrowser;
+          "application/x-extension-shtml" = defaultBrowser;
+          "application/xhtml+xml" = defaultBrowser;
+          "application/x-extension-xhtml" = defaultBrowser;
+          "application/x-extension-xht" = defaultBrowser;
+
+          "x-scheme-handler/about" = defaultBrowser;
+          "x-scheme-handler/unknown" = defaultBrowser;
+
+          "x-scheme-handler/mailto" = defaultMailer;
+          "x-scheme-handler/news" = defaultMailer;
+          "x-scheme-handler/snews" = defaultMailer;
+          "x-scheme-handler/nntp" = defaultMailer;
+          "x-scheme-handler/feed" = defaultMailer;
+          "message/rfc822" = defaultMailer;
+          "application/rss+xml" = defaultMailer;
+          "application/x-extension-rss" = defaultMailer;
+        };
+    };
+
   };
 }

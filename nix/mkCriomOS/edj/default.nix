@@ -90,38 +90,4 @@ in
       windowManager.hypr.enable = typeIs.edjTesting || typeIs.haibrid;
     };
   };
-
-  xdg.mimeApps = {
-    enable = true;
-    defaultApplications =
-      let
-        defaultBrowser = "chromium.desktop";
-        defaultMailer = "evolution.desktop";
-      in
-      {
-        defaultApplications."text/html" = defaultBrowser;
-        "x-scheme-handler/http" = defaultBrowser;
-        "x-scheme-handler/https" = defaultBrowser;
-        "x-scheme-handler/ftp" = defaultBrowser;
-        "x-scheme-handler/chrome" = defaultBrowser;
-        "application/x-extension-htm" = defaultBrowser;
-        "application/x-extension-html" = defaultBrowser;
-        "application/x-extension-shtml" = defaultBrowser;
-        "application/xhtml+xml" = defaultBrowser;
-        "application/x-extension-xhtml" = defaultBrowser;
-        "application/x-extension-xht" = defaultBrowser;
-
-        "x-scheme-handler/about" = defaultBrowser;
-        "x-scheme-handler/unknown" = defaultBrowser;
-
-        "x-scheme-handler/mailto" = defaultMailer;
-        "x-scheme-handler/news" = defaultMailer;
-        "x-scheme-handler/snews" = defaultMailer;
-        "x-scheme-handler/nntp" = defaultMailer;
-        "x-scheme-handler/feed" = defaultMailer;
-        "message/rfc822" = defaultMailer;
-        "application/rss+xml" = defaultMailer;
-        "application/x-extension-rss" = defaultMailer;
-      };
-  };
 }
