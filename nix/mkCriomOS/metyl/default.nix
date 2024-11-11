@@ -19,6 +19,18 @@ let
   izX230 = modyl == "ThinkPadX230";
   izX240 = modyl == "ThinkPadX240";
 
+  internalKeyboardIdentifier =
+    if izX240 then "AT Translated Set 2 keyboard"
+    else throw "missing Keyboard Identifier";
+
+  internalKeyboardConfiguration = ''
+    Section "InputClass"
+      Identifier "${internalKeyboardIdentifier}"
+      MatchIsKeyboard "on"
+      Option "XkbVariant" "colemak"
+    EndSection
+  '';
+
   enabledExtendedPowerSave = true;
 
   cpuFreqGovernor =
@@ -120,6 +132,11 @@ in
   console.useXkbConfig = iuzColemak;
 
   environment = {
+    etc = (optionalAttrs iuzColemak {
+      "X11/xorg.conf.d/00-internal-keyboard.conf".text =
+        internalKeyboardConfiguration;
+    });
+
     systemPackages = with pkgs; [ lm_sensors ]
       ++ optionals tcipIzIntel [ libva-utils i7z ]
       ++ optionals saizAtList.max [ v4l-utils ];
