@@ -28,6 +28,7 @@ let
       Identifier "${internalKeyboardIdentifier}"
       MatchIsKeyboard "on"
       Option "XkbVariant" "colemak"
+      Option "XkbOptions" "caps:ctrl_modifier, altwin:swap_alt_win"
     EndSection
   '';
 
@@ -186,9 +187,6 @@ in
     };
 
     xserver = {
-      xkb.variant = optionalString iuzColemak "colemak";
-      xkb.options = "caps:ctrl_modifier, altwin:swap_alt_win";
-
       autoRepeatDelay = 200;
       autoRepeatInterval = 28;
 
