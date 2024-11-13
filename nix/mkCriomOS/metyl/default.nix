@@ -132,7 +132,7 @@ in
 
   programs = { };
 
-  console.useXkbConfig = iuzColemak;
+  console.useXkbConfig = false; # TODO testing
 
   environment = {
     etc = (optionalAttrs iuzColemak {
@@ -193,6 +193,8 @@ in
       autoRepeatInterval = 28;
 
       digimend.enable = !typeIs.sentyr;
+
+      xkb.variant = optionalString iuzColemak "colemak";
     };
 
     logind = {
