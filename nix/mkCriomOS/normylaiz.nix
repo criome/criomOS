@@ -63,10 +63,6 @@ in
     ];
 
     interactiveShellInit = optionalString iuzColemak "stty -ixon";
-    sessionVariables = (optionalAttrs iuzColemak {
-      XKB_DEFAULT_LAYOUT = "us";
-      XKB_DEFAULT_VARIANT = "colemak";
-    });
   };
 
   networking.networkmanager = {

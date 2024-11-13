@@ -38,26 +38,6 @@ argz: with argz; ''
     repeat_rate 35
   }
 
-  ${optionalString iuzColemak # TODO - this is model specific
-    ''
-      input "1:1:AT_Translated_Set_2_keyboard" {
-        xkb_layout us
-        xkb_variant colemak
-        xkb_options caps:ctrl_modifier,caps:escape,altwin:swap_alt_win
-      }
-    ''
-  }
-
-  input "65261:58893:K.T.E.C._ErgoDone" {
-    xkb_layout us
-    xkb_variant basic
-  }
-
-  input "65261:58893:K.T.E.C._ErgoDone_Keyboard" {
-    xkb_layout us
-    xkb_variant basic
-  }
-
   # ## Key bindings
   # ### Basics:
   # start a shell

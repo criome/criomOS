@@ -25,7 +25,8 @@ let
 
   internalKeyboardConfiguration = ''
     Section "InputClass"
-      Identifier "${internalKeyboardIdentifier}"
+      Identifier "Internal Colemak Keyboard"
+      MatchProduct "${internalKeyboardIdentifier}"
       MatchIsKeyboard "on"
       Option "XkbVariant" "colemak"
       Option "XkbOptions" "caps:ctrl_modifier, altwin:swap_alt_win"
