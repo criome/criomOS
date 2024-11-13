@@ -28,6 +28,8 @@ let
       Identifier "Internal Colemak Keyboard"
       MatchProduct "${internalKeyboardIdentifier}"
       MatchIsKeyboard "on"
+      Option "XkbModel" "pc104"
+      Option "XkbLayout" "us"
       Option "XkbVariant" "colemak"
       Option "XkbOptions" "caps:ctrl_modifier, altwin:swap_alt_win"
     EndSection
@@ -135,7 +137,7 @@ in
 
   environment = {
     etc = (optionalAttrs iuzColemak {
-      "X11/xorg.conf.d/00-internal-keyboard.conf".text =
+      "X11/xorg.conf.d/100-internal-keyboard.conf".text =
         internalKeyboardConfiguration;
     });
 
