@@ -47,6 +47,7 @@ in
 
     device {
       name = at-translated-set-2-keyboard
+      resolve_binds_by_sym = 1
       kb_layout = us
       kb_variant=colemak
       kb_options = ctrl:nocaps,altwin:swap_alt_win
