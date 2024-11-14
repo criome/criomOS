@@ -147,10 +147,10 @@ in
     # bind = $SUPER, D, exec, warpd --normal
     # bind = $SUPER, G, exec, warpd --grid
 
-    bind = $SUPER, 1, workspace, r-1
-    bind = $SUPER, 2, workspace, r+1
-    bind = $SUPER_SHIFT, 1, movetoworkspace, r-1
-    bind = $SUPER_SHIFT, 2, movetoworkspace, r+1
+    bind = SUPER_CONTROL, ${up}, workspace, r-1
+    bind = SUPER_CONTROL, ${down}, workspace, r+1
+    bind = SUPER_CONTROL, ${left}, movetoworkspace, r-1
+    bind = SUPER_CONTROL, ${right}, movetoworkspace, r+1
 
     layerrule = blur,ironbar
     layerrule = blur,rofi
