@@ -53,12 +53,6 @@ in
       kb_options = ctrl:nocaps,altwin:swap_alt_win
     }
 
-    device {
-      name = that-canadian-minidox
-      kb_layout = us
-      kb_variant=
-    }
-
     general {
       gaps_in = 3
       gaps_out = 3
