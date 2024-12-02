@@ -43,6 +43,7 @@ let
     "doc.rust-lang.org"
     "rustc-dev-guide.rust-lang.org"
     "rust-lang.github.io/async-book"
+    "lib.rs"
     "hydra.nixos.org"
     "download.lineageos.org"
     "opengapps.org"
