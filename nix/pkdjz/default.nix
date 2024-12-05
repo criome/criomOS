@@ -58,18 +58,6 @@ let
       lamdy = import ./mfgtools;
     };
 
-    mkCargoNix = {
-      lamdy = import ./mkCargoNix;
-      modz = [ "pkgs" "pkgsSet" "lib" "pkdjz" ];
-      self = null;
-    };
-
-    mozPkgs = {
-      lamdy = import ./mozPkgs;
-      modz = [ "pkdjz" ];
-      self = hob.nixpkgs-mozilla;
-    };
-
     nvimLuaPloginz = {
       lamdy = import ./nvimPloginz/lua.nix;
       modz = [ "hob" "pkdjz" ];
@@ -84,12 +72,6 @@ let
 
     nerd-fonts = {
       lamdy = import ./nerd-fonts;
-      self = null;
-    };
-
-    nightlyRust = {
-      lamdy = import ./nightlyRust;
-      modz = [ "pkdjz" ];
       self = null;
     };
 

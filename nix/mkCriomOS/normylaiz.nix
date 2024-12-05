@@ -69,6 +69,9 @@ in
     });
   };
 
+  # Overlays are bad - force them off
+  nixpkgs.overlays = mkOverride 0 [ ];
+
   networking.networkmanager = {
     enable = saizAtList.min && !typeIs.router;
   };

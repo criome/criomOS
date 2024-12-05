@@ -33,7 +33,7 @@
 
       hob = inputs.hob.value // localHobSources;
 
-      inherit (hob) flake-utils emacs-overlay nixpkgs lib;
+      inherit (hob) flake-utils nixpkgs lib;
       inherit (localSources) kor neksysNames mkPkgs homeModule mkCriomOS mkUyrld;
       inherit (lib) optionalAttrs genAttrs hasAttr;
 
@@ -47,11 +47,7 @@
 
       mkPkgsAndUyrldFromSystem = system:
         let
-          pkgs =
-            let
-              overlays = [ emacs-overlay.overlay ];
-            in
-            mkPkgs { inherit nixpkgs lib system overlays; };
+          pkgs = mkPkgs { inherit nixpkgs lib system; };
           uyrld = mkUyrld { inherit lib pkgs system hob localSources; };
         in
         { inherit pkgs uyrld; };
