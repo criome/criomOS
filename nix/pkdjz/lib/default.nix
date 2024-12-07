@@ -1,2 +1,0 @@
-{ self }:
-import (self + /lib)
