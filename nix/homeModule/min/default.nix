@@ -160,6 +160,9 @@ let
   ++ bleedingEdgeGraphicalPackages # (Todo configure)
   ++ modernGraphicalPackages # (Todo configure)
   ++ (optionals izNiksDev [
+    # Nix
+    nixd
+
     # Clojure
     clojure
     babashka
