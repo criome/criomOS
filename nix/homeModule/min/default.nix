@@ -86,7 +86,7 @@ let
     # start("GTK")
     wofi
     gitg
-    pwvucontrol
+    pwvucontrol # Pipewire audio GTK UI
     sonata
     dino
     ptask
@@ -98,7 +98,8 @@ let
     waylandQtpass
     qtox
     waylandPass
-    helvum
+    # helvum # Broken? Pipewire nodes UI
+    coppwr # Pipewire Nodes UI
     # TODO('hyraizyn language')
     (hunspellWithDicts [ hunspellDicts.en-us-large ])
     (aspellWithDicts (ds: with ds; [ en en-computers en-science ]))
@@ -110,11 +111,50 @@ let
 
   wayland-warpd = pkgs.warpd.override { withX = false; };
 
+  unixUtilities = with pkgs; [
+    erdtree # Disk usage
+    lsof # List open files
+    delta # Git diff viewew
+    cpulimit # Limit a process' CPU usage
+    yggdrasil
+    usbutils
+    pciutils
+    efivar # Hardware
+    lshw
+    gptfdisk
+    parted # Disk utils
+    wireguard-tools
+  ]
+  ++ (optionals (astra.mycin.ark == "x86-64") [ i7z ]);
+
+  programmingTools = with pkgs; [
+    # Nix
+    nixd
+    # Clojure
+    clojure
+    babashka
+    neil
+    clj-kondo
+    leiningen
+    cljfmt
+    # lisp
+    zprint
+    # Flashing
+    avrdude
+    # Rust
+    cargo
+    # Shell
+    shfmt
+    # Other
+    tokei # Lines of code
+  ];
+
+  unixDeveloperPackages = unixUtilities ++ programmingTools
+  ;
+
   nixpkgsPackages = with pkgs; [
     mksh # saner bash
     retry
-    alsaUtils
-    pamixer
     ncpamixer
     mpv
     flac
@@ -153,45 +193,11 @@ let
     eza
     bat
     broot
-    tokei # loc counter
     eva # tui calculator
-
   ]
   ++ bleedingEdgeGraphicalPackages # (Todo configure)
   ++ modernGraphicalPackages # (Todo configure)
-  ++ (optionals izNiksDev [
-    # Nix
-    nixd
-
-    # Clojure
-    clojure
-    babashka
-    neil
-    clj-kondo
-    leiningen
-    cljfmt
-
-    # lisp
-    zprint
-
-    lsof
-    miniserve
-    yggdrasil
-    delta
-    cpulimit
-    usbutils
-    pciutils
-    efivar # Hardware
-    lshw
-    gptfdisk
-    parted # Disk utils
-    avrdude
-    wireguard-tools
-    cargo
-    shfmt
-  ] ++ (optionals (astra.mycin.ark == "x86-64") [
-    i7z
-  ]))
+  ++ (optionals izNiksDev unixDeveloperPackages)
   ++ (optionals izSemaDev (with pkgs; [
     inkscape
   ]));
