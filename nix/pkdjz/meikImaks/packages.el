@@ -24,7 +24,8 @@
   :config
   (add-to-list 'auto-mode-alist '("\\.nix\\'" . nix-ts-mode)))
 
-(use-package nixpkgs-fmt)
+(use-package nixfmt
+  :hook (nix-ts-mode . nixfmt-on-save-mode))
 
 (use-package json-mode)
 

@@ -130,6 +130,7 @@ let
   programmingTools = with pkgs; [
     # Nix
     nixd
+    nixfmt-rfc-style
     # Clojure
     clojure
     babashka

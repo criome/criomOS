@@ -55,7 +55,6 @@ let
     watchexec
     zola
     git-series
-    nixpkgs-fmt
     tree-sitter
     gitAndTools.gitui
     # Python
