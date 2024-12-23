@@ -1,11 +1,33 @@
-{ kor, pkgs, pkdjz, user, hyraizyn, config, profile, uyrld, ... }:
+{
+  kor,
+  pkgs,
+  pkdjz,
+  user,
+  hyraizyn,
+  config,
+  profile,
+  uyrld,
+  ...
+}:
 let
   inherit (builtins) toString readFile toJSON;
-  inherit (kor) optionalString optionals mkIf optional;
+  inherit (kor)
+    optionalString
+    optionals
+    mkIf
+    optional
+    ;
   inherit (pkdjz) kynvyrt;
   inherit (hyraizyn) astra;
-  inherit (user.spinyrz) iuzColemak hazPreCriome
-    gitSigningKey matrixID saizAtList izNiksDev izSemaDev;
+  inherit (user.spinyrz)
+    iuzColemak
+    hazPreCriome
+    gitSigningKey
+    matrixID
+    saizAtList
+    izNiksDev
+    izSemaDev
+    ;
   inherit (user) githubId neim spinyrz;
   inherit (profile) dark;
   inherit (pkgs) writeText;
@@ -23,26 +45,34 @@ let
   fzfTheme = if dark then import ./fzfDark.nix else import ./fzfLight.nix;
   fzfBase16Map = import ./fzfBase16map.nix;
 
-  mkFzfColor = n: v:
-    let color = fzfTheme.${v};
-    in color;
+  mkFzfColor =
+    n: v:
+    let
+      color = fzfTheme.${v};
+    in
+    color;
 
   fzfColors = builtins.mapAttrs mkFzfColor fzfBase16Map;
 
   waylandQtpass = pkgs.qtpass.override { pass = waylandPass; };
-  waylandPass = pkgs.pass.override { x11Support = false; waylandSupport = true; };
+  waylandPass = pkgs.pass.override {
+    x11Support = false;
+    waylandSupport = true;
+  };
 
-  fontDeriveicynz = [ pkgs.noto-fonts-cjk ]
-    ++ (optionals saizAtList.med (with pkgs; [
-    pkdjz.nerd-fonts.firaCode
-    fira-code
-  ]));
+  fontDeriveicynz =
+    [ pkgs.noto-fonts-cjk ]
+    ++ (optionals saizAtList.med (
+      with pkgs;
+      [
+        pkdjz.nerd-fonts.firaCode
+        fira-code
+      ]
+    ));
 
   mkFcCache = pkgs.makeFontsCache { fontDirectories = fontDeriveicynz; };
 
-  mkFontPaths = kor.concatMapStringsSep "\n"
-    (path: "<dir>${path}/share/fonts</dir>")
-    fontDeriveicynz;
+  mkFontPaths = kor.concatMapStringsSep "\n" (path: "<dir>${path}/share/fonts</dir>") fontDeriveicynz;
 
   mkFontConf = ''
     <?xml version='1.0'?>
@@ -53,7 +83,8 @@ let
     </fontconfig>
   '';
 
-  mkFootSrcTheme = themeName:
+  mkFootSrcTheme =
+    themeName:
     let
       themeString = readFile (pkgs.foot.src + "/themes/${themeName}");
     in
@@ -102,7 +133,13 @@ let
     coppwr # Pipewire Nodes UI
     # TODO('hyraizyn language')
     (hunspellWithDicts [ hunspellDicts.en-us-large ])
-    (aspellWithDicts (ds: with ds; [ en en-computers en-science ]))
+    (aspellWithDicts (
+      ds: with ds; [
+        en
+        en-computers
+        en-science
+      ]
+    ))
     hunspellDicts.en-us-large
     tor-browser-bundle-bin
   ];
@@ -111,21 +148,23 @@ let
 
   wayland-warpd = pkgs.warpd.override { withX = false; };
 
-  unixUtilities = with pkgs; [
-    erdtree # Disk usage
-    lsof # List open files
-    delta # Git diff viewew
-    cpulimit # Limit a process' CPU usage
-    yggdrasil
-    usbutils
-    pciutils
-    efivar # Hardware
-    lshw
-    gptfdisk
-    parted # Disk utils
-    wireguard-tools
-  ]
-  ++ (optionals (astra.mycin.ark == "x86-64") [ i7z ]);
+  unixUtilities =
+    with pkgs;
+    [
+      erdtree # Disk usage
+      lsof # List open files
+      delta # Git diff viewew
+      cpulimit # Limit a process' CPU usage
+      yggdrasil
+      usbutils
+      pciutils
+      efivar # Hardware
+      lshw
+      gptfdisk
+      parted # Disk utils
+      wireguard-tools
+    ]
+    ++ (optionals (astra.mycin.ark == "x86-64") [ i7z ]);
 
   programmingTools = with pkgs; [
     # Nix
@@ -150,58 +189,62 @@ let
     tokei # Lines of code
   ];
 
-  unixDeveloperPackages = unixUtilities ++ programmingTools
-  ;
+  unixDeveloperPackages = unixUtilities ++ programmingTools;
 
-  nixpkgsPackages = with pkgs; [
-    mksh # saner bash
-    retry
-    ncpamixer
-    mpv
-    flac
-    shntool
-    dvtm
-    abduco # Multiplexer/session
-    vis # regex Editor
-    tree
-    ncdu # File visualizing
-    unzip
-    unrar
-    fuse
-    cryptsetup
-    # Network
-    sshfs-fuse
-    ifmetric
-    curl
-    wget
-    transmission_4
-    aria2 # multi-protocol download
-    rsync
-    nload
-    nmap
-    iftop
-    # Wireless
-    iw
-    wirelesstools
-    acpi
-    sox # audio capture
-    tio # serial tty
-    androidenv.androidPkgs.platform-tools # adb/fastboot
-    #== rust
-    sd
-    ripgrep
-    fd
-    eza
-    bat
-    broot
-    eva # tui calculator
-  ]
-  ++ bleedingEdgeGraphicalPackages # (Todo configure)
-  ++ modernGraphicalPackages # (Todo configure)
-  ++ (optionals izNiksDev unixDeveloperPackages)
-  ++ (optionals izSemaDev (with pkgs; [
-    inkscape
-  ]));
+  nixpkgsPackages =
+    with pkgs;
+    [
+      mksh # saner bash
+      retry
+      ncpamixer
+      mpv
+      flac
+      shntool
+      dvtm
+      abduco # Multiplexer/session
+      vis # regex Editor
+      tree
+      ncdu # File visualizing
+      unzip
+      unrar
+      fuse
+      cryptsetup
+      # Network
+      sshfs-fuse
+      ifmetric
+      curl
+      wget
+      transmission_4
+      aria2 # multi-protocol download
+      rsync
+      nload
+      nmap
+      iftop
+      # Wireless
+      iw
+      wirelesstools
+      acpi
+      sox # audio capture
+      tio # serial tty
+      androidenv.androidPkgs.platform-tools # adb/fastboot
+      #== rust
+      sd
+      ripgrep
+      fd
+      eza
+      bat
+      broot
+      eva # tui calculator
+    ]
+    ++ bleedingEdgeGraphicalPackages # (Todo configure)
+    ++ modernGraphicalPackages # (Todo configure)
+    ++ (optionals izNiksDev unixDeveloperPackages)
+    ++ (optionals izSemaDev (
+      with pkgs;
+      [
+        inkscape
+      ]
+    ));
 
   uyrldPackages = with uyrld; [
     pkdjz.shen-bootstrap
@@ -278,8 +321,12 @@ mkIf saizAtList.min {
       enable = izNiksDev;
       settings = {
         shared = { };
-        client = { dark_mode = dark; };
-        daemon = { default_parallel_tasks = 1; };
+        client = {
+          dark_mode = dark;
+        };
+        daemon = {
+          default_parallel_tasks = 1;
+        };
       };
     };
   };
@@ -373,8 +420,9 @@ mkIf saizAtList.min {
         dsync = "rsync --checksum --progress --recursive --delete";
       };
 
-      initExtra = builtins.readFile ../nonNix/zshrc +
-        ''
+      initExtra =
+        builtins.readFile ../nonNix/zshrc
+        + ''
           if [[ $options[zle] = on ]]; then
           . ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.zsh
           fi
