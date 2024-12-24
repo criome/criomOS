@@ -503,6 +503,9 @@ mkIf saizAtList.min {
           defaultMailer = "evolution.desktop";
         in
         {
+          "application/epub+zip" = "calibre-ebook-viewer.desktop";
+          "application/pdf" = "org.pwmt.zathura-pdf-mupdf.desktop";
+
           "text/html" = defaultBrowser;
           "x-scheme-handler/http" = defaultBrowser;
           "x-scheme-handler/https" = defaultBrowser;
