@@ -170,6 +170,7 @@ let
     # Nix
     nixd
     nixfmt-rfc-style
+    npins
     # Clojure
     clojure
     babashka
