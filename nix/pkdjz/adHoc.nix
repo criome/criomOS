@@ -5,11 +5,15 @@ let
 in
 {
   base16-styles = {
-    lamdy = { src, stdenv }:
+    lamdy =
+      { src, stdenv }:
       stdenv.mkDerivation {
         name = "base16-styles";
         inherit src;
-        phases = [ "unpackPhase" "installPhase" ];
+        phases = [
+          "unpackPhase"
+          "installPhase"
+        ];
         installPhase = ''
           mkdir -p $out/lib
           cp -R ./{scss,css,sass} $out/lib
@@ -18,42 +22,56 @@ in
   };
 
   flake-registry = {
-    lamdy = { src, copyPathToStore }:
-      copyPathToStore (src + /flake-registry.json);
+    lamdy = { src, copyPathToStore }: copyPathToStore (src + /flake-registry.json);
   };
 
   jumpdrive = {
-    modz = [ "pkgs" "pkdjz" ];
+    modz = [
+      "pkgs"
+      "pkdjz"
+    ];
     src = null;
-    lamdy = { stdenv, fetchurl, mksh, writeScriptBin, mfgtools }:
+    lamdy =
+      {
+        stdenv,
+        fetchurl,
+        mksh,
+        writeScriptBin,
+        mfgtools,
+      }:
       let
-        mkRelease = name: versionAndNarHashes:
+        mkRelease =
+          name: versionAndNarHashes:
           let
             inherit (versionAndNarHashes) version narHash;
 
-            url =
-              "https://github.com/dreemurrs-embedded/Jumpdrive/releases/download/${version}/${name}.tar.xz";
+            url = "https://github.com/dreemurrs-embedded/Jumpdrive/releases/download/${version}/${name}.tar.xz";
 
-            src = fetchurl { inherit url; hash = narHash; };
+            src = fetchurl {
+              inherit url;
+              hash = narHash;
+            };
 
             launcherName = "jumpdrive-" + name;
             dataDirectorySuffix = "/share/jumpdrive/${name}";
 
             dataPkgName = name + "-data";
 
-            dataPkg = stdenv.mkDerivation
-              {
-                name = dataPkgName;
-                inherit src;
-                phases = [ "unpackPhase" "installPhase" ];
+            dataPkg = stdenv.mkDerivation {
+              name = dataPkgName;
+              inherit src;
+              phases = [
+                "unpackPhase"
+                "installPhase"
+              ];
 
-                unpackPhase = "tar xf $src";
+              unpackPhase = "tar xf $src";
 
-                installPhase = ''
-                  mkdir -p $out${dataDirectorySuffix}
-                  cp -R ./* $out${dataDirectorySuffix}
-                '';
-              };
+              installPhase = ''
+                mkdir -p $out${dataDirectorySuffix}
+                cp -R ./* $out${dataDirectorySuffix}
+              '';
+            };
 
             dataDirectory = dataPkg + dataDirectorySuffix;
 
@@ -81,7 +99,14 @@ in
 
   ndi = {
     lamdy =
-      { src, lib, stdenv, requireFile, avahi, obs-studio-plugins }:
+      {
+        src,
+        lib,
+        stdenv,
+        requireFile,
+        avahi,
+        obs-studio-plugins,
+      }:
       let
         version = "5.5.x";
         majorVersion = builtins.head (builtins.splitVersion version);
@@ -134,22 +159,31 @@ in
 
   netresolve = {
     lamdy =
-      { src
-      , stdenv
-      , bash
-      , automake
-      , autoconf
-      , pkg-config
-      , libtool
-      , c-ares
-      , libasyncns
+      {
+        src,
+        stdenv,
+        bash,
+        automake,
+        autoconf,
+        pkg-config,
+        libtool,
+        c-ares,
+        libasyncns,
       }:
       stdenv.mkDerivation {
         pname = "netresolve";
         version = src.shortRev;
         inherit src;
-        nativeBuildInputs = [ pkg-config autoconf automake libtool ];
-        buildInputs = [ c-ares libasyncns ];
+        nativeBuildInputs = [
+          pkg-config
+          autoconf
+          automake
+          libtool
+        ];
+        buildInputs = [
+          c-ares
+          libasyncns
+        ];
         postPatch = ''
           substituteInPlace autogen.sh --replace "/bin/bash" "${bash}/bin/bash"
         '';
@@ -159,7 +193,8 @@ in
 
   postcss-scss = {
     modz = [ "pkdjz" ];
-    lamdy = { src, pnpm2nix }:
+    lamdy =
+      { src, pnpm2nix }:
       let
         inherit (pnpm2nix.v12) mkPnpmPackage;
 
@@ -173,9 +208,10 @@ in
   hyprland-relative-workspace = {
     src = null;
     lamdy =
-      { lib
-      , rustPlatform
-      , fetchFromGitHub
+      {
+        lib,
+        rustPlatform,
+        fetchFromGitHub,
       }:
 
       rustPlatform.buildRustPackage rec {
@@ -203,7 +239,13 @@ in
   pkgs-master = {
     modz = [ "mkPkgs" ];
     self = hob.nixpkgs-master;
-    lamdy = { lib, src, system, mkPkgs }:
+    lamdy =
+      {
+        lib,
+        src,
+        system,
+        mkPkgs,
+      }:
       mkPkgs {
         inherit lib system;
         nixpkgs = src;
@@ -212,7 +254,8 @@ in
 
   skylendar = {
     src = null;
-    lamdy = { stdenv, fetchurl }:
+    lamdy =
+      { stdenv, fetchurl }:
       let
         pname = "skylendar";
         version = "5.0nn";
@@ -226,8 +269,9 @@ in
       };
   };
 
-   tdlib = {
-    lamdy = { src, tdlib }:
+  tdlib = {
+    lamdy =
+      { src, tdlib }:
       tdlib.overrideAttrs (attrs: {
         version = "1.8.16";
         inherit src;
@@ -235,9 +279,17 @@ in
   };
 
   wireguardNetresolved = {
-    modz = [ "pkgs" "pkdjz" ];
+    modz = [
+      "pkgs"
+      "pkdjz"
+    ];
     src = null;
-    lamdy = { wireguard-tools, makeWrapper, netresolve }:
+    lamdy =
+      {
+        wireguard-tools,
+        makeWrapper,
+        netresolve,
+      }:
       let
         netresolveLibPath = "${netresolve}/lib";
         netresolvePreloads = "libnetresolve-libc.so.0 libnetresolve-asyncns.so.0";
@@ -251,7 +303,6 @@ in
       });
   };
 
-  xdg-desktop-portal-hyprland.lamdy = { src, system }:
-    src.packages.${system}.default;
+  xdg-desktop-portal-hyprland.lamdy = { src, system }: src.packages.${system}.default;
 
 }

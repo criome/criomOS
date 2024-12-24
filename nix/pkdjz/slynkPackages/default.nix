@@ -1,15 +1,20 @@
-{ emacsPackages
-, lispPackages
+{
+  emacsPackages,
+  lispPackages,
 }:
 let
-  trivialBuild = args@{ baseName, ... }:
-    lispPackages.buildLispPackage ({
-      inherit baseName;
-      description = baseName;
-      packageName = baseName;
-      buildSystems = [ baseName ];
-      asdFilesToKeep = [ "${baseName}.asd" ];
-    } // args);
+  trivialBuild =
+    args@{ baseName, ... }:
+    lispPackages.buildLispPackage (
+      {
+        inherit baseName;
+        description = baseName;
+        packageName = baseName;
+        buildSystems = [ baseName ];
+        asdFilesToKeep = [ "${baseName}.asd" ];
+      }
+      // args
+    );
 
   slynk = trivialBuild rec {
     baseName = "slynk";
@@ -66,6 +71,11 @@ let
 
 in
 {
-  inherit slynk slynk-quicklisp slynk-asdf slynk-named-readtables
-    slynk-macrostep;
+  inherit
+    slynk
+    slynk-quicklisp
+    slynk-asdf
+    slynk-named-readtables
+    slynk-macrostep
+    ;
 }

@@ -1,18 +1,41 @@
-{ hyraizyn, config, kor, pkgs, ... }:
+{
+  hyraizyn,
+  config,
+  kor,
+  pkgs,
+  ...
+}:
 let
-  inherit (builtins) filter mapAttrs attrNames hasAttr
-    concatStringsSep concatMap;
-  inherit (kor) optionals optional optionalString mkIf optionalAttrs;
+  inherit (builtins)
+    filter
+    mapAttrs
+    attrNames
+    hasAttr
+    concatStringsSep
+    concatMap
+    ;
+  inherit (kor)
+    optionals
+    optional
+    optionalString
+    mkIf
+    optionalAttrs
+    ;
 
   inherit (hyraizyn) astra exAstriz users;
   inherit (astra.spinyrz) adminEseseitcPreCriomes;
 
   userNeimz = attrNames users;
 
-  mkEseseitcString = preCriome: concatStringsSep " "
-    [ "ed25519" preCriome.eseseitc ];
+  mkEseseitcString =
+    preCriome:
+    concatStringsSep " " [
+      "ed25519"
+      preCriome.eseseitc
+    ];
 
-  mkUser = attrNeim: user:
+  mkUser =
+    attrNeim: user:
     let
       inherit (user) trost spinyrz;
       inherit (user.spinyrz) eseseitcyz hazPreCriome;
@@ -26,15 +49,13 @@ let
 
       openssh.authorizedKeys.keys = eseseitcyz;
 
-      extraGroups = [ "audio" ]
-        ++
-        (optional (config.programs.sway.enable == true) "sway")
-        ++
-        (optionals (trost >=2)
-          ([ "video" ] ++
-            (optional (config.networking.networkmanager.enable == true)) "networkmanager"))
-        ++
-        (optionals (trost >= 3) [
+      extraGroups =
+        [ "audio" ]
+        ++ (optional (config.programs.sway.enable == true) "sway")
+        ++ (optionals (trost >= 2) (
+          [ "video" ] ++ (optional (config.networking.networkmanager.enable == true)) "networkmanager"
+        ))
+        ++ (optionals (trost >= 3) [
           "adbusers"
           "nixdev"
           "systemd-journal"
@@ -47,7 +68,6 @@ let
 
   mkUserUsers = mapAttrs mkUser users;
 
-
   rootUserAkses = {
     root = {
       openssh.authorizedKeys.keys = adminEseseitcPreCriomes;
@@ -55,4 +75,8 @@ let
   };
 
 in
-{ users = { users = mkUserUsers // rootUserAkses; }; }
+{
+  users = {
+    users = mkUserUsers // rootUserAkses;
+  };
+}

@@ -1,62 +1,144 @@
-{ kor, lib, pkgs, hob, hyraizyn, uyrld, konstynts, config, criomOS, ... }:
+{
+  kor,
+  lib,
+  pkgs,
+  hob,
+  hyraizyn,
+  uyrld,
+  konstynts,
+  config,
+  criomOS,
+  ...
+}:
 with builtins;
 let
   inherit (lib) boolToString mapAttrsToList importJSON;
-  inherit (kor) optionals mkIf optional eksportJSON optionalAttrs;
+  inherit (kor)
+    optionals
+    mkIf
+    optional
+    eksportJSON
+    optionalAttrs
+    ;
 
   inherit (hyraizyn.metastra.spinyrz) trostydBildPreCriomes;
   inherit (hyraizyn) astra;
   inherit (hyraizyn.astra.spinyrz)
-    bildyrKonfigz kacURLz dispatcyrzEseseitcKiz saizAtList
-    izBildyr izNiksKac izDispatcyr izNiksCriodaizd
-    nixCacheDomain;
+    bildyrKonfigz
+    kacURLz
+    dispatcyrzEseseitcKiz
+    saizAtList
+    izBildyr
+    izNiksKac
+    izDispatcyr
+    izNiksCriodaizd
+    nixCacheDomain
+    ;
 
   inherit (konstynts.fileSystem.niks) preCriad;
   inherit (konstynts.network.niks) serve;
 
   jsonHyraizynFail = eksportJSON "hyraizyn.json" hyraizyn;
 
-  flakeEntriesOverrides = {
-    blank = { owner = "divnix"; };
-    incl = { owner = "divnix"; };
-    haumea = { owner = "nix-community"; ref = "v0.2.2"; };
-    paisano = { owner = "paisano-nix"; repo = "core"; };
-    paisano-tui = { owner = "paisano-nix"; repo = "tui"; ref = "0.2.0"; };
-    dmerge = { owner = "divnix"; ref = "0.2.1"; };
-    yants = { owner = "divnix"; };
-    std = { owner = "LiGoldragon"; ref = "fixLibFollows"; };
-    call-flake = { owner = "divnix"; };
-    nosys = { owner = "divnix"; };
-    devshell = { owner = "numtide"; };
-    nixago = { owner = "nix-community"; };
-    clj-nix = { owner = "jlesquembre"; };
+  flakeEntriesOverrides =
+    {
+      blank = {
+        owner = "divnix";
+      };
+      incl = {
+        owner = "divnix";
+      };
+      haumea = {
+        owner = "nix-community";
+        ref = "v0.2.2";
+      };
+      paisano = {
+        owner = "paisano-nix";
+        repo = "core";
+      };
+      paisano-tui = {
+        owner = "paisano-nix";
+        repo = "tui";
+        ref = "0.2.0";
+      };
+      dmerge = {
+        owner = "divnix";
+        ref = "0.2.1";
+      };
+      yants = {
+        owner = "divnix";
+      };
+      std = {
+        owner = "LiGoldragon";
+        ref = "fixLibFollows";
+      };
+      call-flake = {
+        owner = "divnix";
+      };
+      nosys = {
+        owner = "divnix";
+      };
+      devshell = {
+        owner = "numtide";
+      };
+      nixago = {
+        owner = "nix-community";
+      };
+      clj-nix = {
+        owner = "jlesquembre";
+      };
 
-    flakeWorld = { owner = "sajban"; };
-    hob = { owner = "sajban"; ref = "autumnCleaning"; };
+      flakeWorld = {
+        owner = "sajban";
+      };
+      hob = {
+        owner = "sajban";
+        ref = "autumnCleaning";
+      };
 
-    lib = { owner = "nix-community"; repo = "nixpkgs.lib"; };
+      lib = {
+        owner = "nix-community";
+        repo = "nixpkgs.lib";
+      };
 
-    nixpkgs = {
-      owner = "NixOS";
-      repo = "nixpkgs";
-      inherit (hob.nixpkgs) rev;
-    } // optionalAttrs (hob.nixpkgs ? ref) { inherit (hob.nixpkgs) ref; };
+      nixpkgs = {
+        owner = "NixOS";
+        repo = "nixpkgs";
+        inherit (hob.nixpkgs) rev;
+      } // optionalAttrs (hob.nixpkgs ? ref) { inherit (hob.nixpkgs) ref; };
 
-    nixpkgs-master = { owner = "NixOS"; repo = "nixpkgs"; };
+      nixpkgs-master = {
+        owner = "NixOS";
+        repo = "nixpkgs";
+      };
 
-    xdg-desktop-portal-hyprland = { owner = "hyprwm"; };
+      xdg-desktop-portal-hyprland = {
+        owner = "hyprwm";
+      };
 
-  } // optionalAttrs criomOS.cleanEvaluation
-    { criomOS = { owner = "sajban"; inherit (criomOS) rev; }; };
+    }
+    // optionalAttrs criomOS.cleanEvaluation {
+      criomOS = {
+        owner = "sajban";
+        inherit (criomOS) rev;
+      };
+    };
 
-  mkFlakeEntriesListFromSet = entriesMap:
+  mkFlakeEntriesListFromSet =
+    entriesMap:
     let
       mkFlakeEntry = name: value: {
         from = {
           id = name;
           type = "indirect";
         };
-        to = ({ repo = name; type = "github"; } // value);
+        to = (
+          {
+            repo = name;
+            type = "github";
+          }
+          // value
+        );
       };
     in
     mapAttrsToList mkFlakeEntry entriesMap;
@@ -64,16 +146,19 @@ let
   criomOSFlakeEntries = mkFlakeEntriesListFromSet flakeEntriesOverrides;
 
   nixOSFlakeEntries =
-    let nixOSFlakeRegistry = importJSON uyrld.pkdjz.flake-registry;
-    in nixOSFlakeRegistry.flakes;
+    let
+      nixOSFlakeRegistry = importJSON uyrld.pkdjz.flake-registry;
+    in
+    nixOSFlakeRegistry.flakes;
 
-  filterOutRegistry = entry:
+  filterOutRegistry =
+    entry:
     let
       flakeName = entry.from.id;
       flakeOverrideNames = attrNames flakeEntriesOverrides;
       entryIsOverridden = elem flakeName flakeOverrideNames;
     in
-      !(entryIsOverridden);
+    !(entryIsOverridden);
 
   filteredNixosFlakeEntries = filter filterOutRegistry nixOSFlakeEntries;
 
@@ -82,8 +167,7 @@ let
     version = 2;
   };
 
-  nixFlakeRegistryJson = eksportJSON "nixFlakeRegistry.json"
-    nixFlakeRegistry;
+  nixFlakeRegistryJson = eksportJSON "nixFlakeRegistry.json" nixFlakeRegistry;
 
 in
 {
@@ -94,7 +178,10 @@ in
 
   networking = {
     firewall = {
-      allowedTCPPorts = optionals izNiksKac [ serve.ports.external 80 ];
+      allowedTCPPorts = optionals izNiksKac [
+        serve.ports.external
+        80
+      ];
     };
   };
 
@@ -102,9 +189,15 @@ in
     package = pkgs.nixVersions.latest;
 
     settings = {
-      trusted-users = [ "root" "@nixdev" ] ++ optional izBildyr "nixBuilder";
+      trusted-users = [
+        "root"
+        "@nixdev"
+      ] ++ optional izBildyr "nixBuilder";
 
-      allowed-users = [ "@users" "nix-serve" ];
+      allowed-users = [
+        "@users"
+        "nix-serve"
+      ];
 
       build-cores = astra.nbOfBildKorz;
 
@@ -137,21 +230,30 @@ in
   };
 
   users = {
-    groups = { nixdev = { }; }
+    groups =
+      {
+        nixdev = { };
+      }
       // (optionalAttrs izBildyr { nixBuilder = { }; })
-      // (optionalAttrs izNiksKac { nix-serve = { gid = 199; }; });
+      // (optionalAttrs izNiksKac {
+        nix-serve = {
+          gid = 199;
+        };
+      });
 
-    users = (optionalAttrs izNiksKac {
-      nix-serve = {
-        uid = 199;
-        group = "nix-serve";
-      };
-    }) // (optionalAttrs izBildyr {
-      nixBuilder = {
-        isNormalUser = true;
-        useDefaultShell = true;
-        openssh.authorizedKeys.keys = dispatcyrzEseseitcKiz;
-      };
-    });
+    users =
+      (optionalAttrs izNiksKac {
+        nix-serve = {
+          uid = 199;
+          group = "nix-serve";
+        };
+      })
+      // (optionalAttrs izBildyr {
+        nixBuilder = {
+          isNormalUser = true;
+          useDefaultShell = true;
+          openssh.authorizedKeys.keys = dispatcyrzEseseitcKiz;
+        };
+      });
   };
 }

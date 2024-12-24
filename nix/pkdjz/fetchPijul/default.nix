@@ -1,9 +1,15 @@
-{ lib, stdenvNoCC, pijul, cacert }:
+{
+  lib,
+  stdenvNoCC,
+  pijul,
+  cacert,
+}:
 
-{ name ? ""
-, url
-, sha256
-, ancestor ? null
+{
+  name ? "",
+  url,
+  sha256,
+  ancestor ? null,
 }@argz:
 
 let
@@ -17,7 +23,10 @@ stdenvNoCC.mkDerivation {
   outputHashMode = "recursive";
   outputHash = sha256;
 
-  phases = [ "buildPhase" "installPhase" ];
+  phases = [
+    "buildPhase"
+    "installPhase"
+  ];
 
   nativeBuildInputs = [ pijul ];
 

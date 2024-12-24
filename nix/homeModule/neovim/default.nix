@@ -1,7 +1,29 @@
-{ kor, pkgs, pkdjz, user, config, profile, hyraizyn, ... }:
+{
+  kor,
+  pkgs,
+  pkdjz,
+  user,
+  config,
+  profile,
+  hyraizyn,
+  ...
+}:
 let
-  inherit (builtins) concatStringsSep readFile elem concatMap toJSON;
-  inherit (kor) optionalString optionals mkIf mapAttrsToList optional optionalAttrs;
+  inherit (builtins)
+    concatStringsSep
+    readFile
+    elem
+    concatMap
+    toJSON
+    ;
+  inherit (kor)
+    optionalString
+    optionals
+    mkIf
+    mapAttrsToList
+    optional
+    optionalAttrs
+    ;
   inherit (user.spinyrz) izNiksDev saizAtList iuzColemak;
   inherit (hyraizyn) astra;
   inherit (profile) dark;
@@ -44,11 +66,13 @@ let
     gv-vim
   ];
 
-  vimlPloginz = minVimLPloginz
+  vimlPloginz =
+    minVimLPloginz
     ++ (optionals saizAtList.med medVimlPlogins)
     ++ (optionals saizAtList.max maxVimlPlogins);
 
-  luaPloginz = minLuaPloginz
+  luaPloginz =
+    minLuaPloginz
     ++ (optionals saizAtList.med medLuaPloginz)
     ++ (optionals saizAtList.max maxLuaPloginz);
 
@@ -81,7 +105,6 @@ let
   maxLuaPloginz = with vimPlugins; [
     lspsaga-nvim
   ];
-
 
   themeKod =
     let
@@ -117,21 +140,30 @@ let
   hlsWrapperPath = "${pkgs.haskell-language-server}/bin/haskell-language-server-wrapper";
   pylsPath = "${pkgs.python38Packages.python-language-server}/bin/pyls";
 
-  minKod = (readFile ./min.lua) + ''
-    require'nvim-treesitter.configs'.setup {
-      incremental_selection = {
-        keymaps = {
-  '' + (if iuzColemak then ''
-    node_decremental = "<C-N>",
-    node_incremental = "<C-E>",
-  '' else ''
-    node_decremental = "<C-J>",
-    node_incremental = "<C-K>",
-  '') + ''
+  minKod =
+    (readFile ./min.lua)
+    + ''
+      require'nvim-treesitter.configs'.setup {
+        incremental_selection = {
+          keymaps = {
+    ''
+    + (
+      if iuzColemak then
+        ''
+          node_decremental = "<C-N>",
+          node_incremental = "<C-E>",
+        ''
+      else
+        ''
+          node_decremental = "<C-J>",
+          node_incremental = "<C-K>",
+        ''
+    )
+    + ''
+          },
         },
-      },
-    }
-  '';
+      }
+    '';
 
   medLangServers = {
     rust_analyzer = {
@@ -139,43 +171,65 @@ let
       capabilities = { };
       settings.rust-analyzer = {
         procMacro.enable = true;
-        cargo = { loadOutDirsFromCheck = true; };
+        cargo = {
+          loadOutDirsFromCheck = true;
+        };
         diagnostics.disabled = [ "unresolved-proc-macro" ];
       };
     };
 
-    rnix = { cmd = [ "${pkgs.rnix-lsp}/bin/rnix-lsp" ]; };
-    clangd = { cmd = [ clangdPath "--background-index" ]; };
+    rnix = {
+      cmd = [ "${pkgs.rnix-lsp}/bin/rnix-lsp" ];
+    };
+    clangd = {
+      cmd = [
+        clangdPath
+        "--background-index"
+      ];
+    };
     # cmake = { cmd = [ cmakeLSPath ]; }; # broken
   };
 
   maxLangServers = {
-    pyls = { cmd = [ pylsPath ]; };
-    gopls = { cmd = [ goplsPath ]; };
-    hls = { cmd = [ hlsWrapperPath "--lsp" ]; };
+    pyls = {
+      cmd = [ pylsPath ];
+    };
+    gopls = {
+      cmd = [ goplsPath ];
+    };
+    hls = {
+      cmd = [
+        hlsWrapperPath
+        "--lsp"
+      ];
+    };
   };
 
   langServers = optionalAttrs izNiksDev (
-    (optionalAttrs saizAtList.med medLangServers) //
-    (optionalAttrs saizAtList.max maxLangServers)
+    (optionalAttrs saizAtList.med medLangServers) // (optionalAttrs saizAtList.max maxLangServers)
   );
 
-  medKod = ''
-    vim.g.UltiSnipsJumpBackwardTrigger = '<c-h>'
-  '' + (if iuzColemak then ''
-    vim.g.UltiSnipsJumpForwardTrigger = '<c-i>'
-  '' else ''
-    vim.g.UltiSnipsJumpForwardTrigger = '<c-l>'
-  '');
+  medKod =
+    ''
+      vim.g.UltiSnipsJumpBackwardTrigger = '<c-h>'
+    ''
+    + (
+      if iuzColemak then
+        ''
+          vim.g.UltiSnipsJumpForwardTrigger = '<c-i>'
+        ''
+      else
+        ''
+          vim.g.UltiSnipsJumpForwardTrigger = '<c-l>'
+        ''
+    );
 
   maxKod = ''
     vim.g.gitblame_enabled  = 0
     require('lspsaga').init_lsp_saga()
   '';
 
-  medLuaKod = medKod
-    + (readFile ./med.lua)
-    + ctagsKod;
+  medLuaKod = medKod + (readFile ./med.lua) + ctagsKod;
 
   maxLuaKod = maxKod;
 
@@ -197,7 +251,11 @@ let
       };
     };
     textDocument = {
-      completion = { completionItem = { snippetSupport = true; }; };
+      completion = {
+        completionItem = {
+          snippetSupport = true;
+        };
+      };
     };
   };
 
@@ -220,19 +278,20 @@ let
     "${drv}/share/lua/${drv.lua.luaversion}/?/init.lua"
   ];
 
-  luaModulesPaths = concatStringsSep ";"
-    (optionals (luaModz != [ ]) (concatMap mkLuaPaths luaModz));
+  luaModulesPaths = concatStringsSep ";" (optionals (luaModz != [ ]) (concatMap mkLuaPaths luaModz));
 
-  luaCModulesPaths = concatStringsSep ";"
-    (optionals (luaCModz != [ ]) (map mkLuaCPath luaCModz));
+  luaCModulesPaths = concatStringsSep ";" (optionals (luaCModz != [ ]) (map mkLuaCPath luaCModz));
 
-  loadLuaPathsKod = optionalString (luaModz != [ ]) ''
-    package.path = package.path .. ";" .. [[${luaModulesPaths}]]
-  '' + optionalString (luaCModz != [ ]) ''
-    package.cpath = package.cpath .. ";" .. [[${luaCModulesPaths}]]
-  '';
+  loadLuaPathsKod =
+    optionalString (luaModz != [ ]) ''
+      package.path = package.path .. ";" .. [[${luaModulesPaths}]]
+    ''
+    + optionalString (luaCModz != [ ]) ''
+      package.cpath = package.cpath .. ";" .. [[${luaCModulesPaths}]]
+    '';
 
-  initLuaKod = loadLuaPathsKod
+  initLuaKod =
+    loadLuaPathsKod
     + niksPathLuaKod
     + (readFile ./vimLib.lua)
     + (readFile ./niovi.lua)
@@ -245,8 +304,9 @@ let
     + minKod
     + themeKod
     + (readFile ./expressline.lua)
-    + (optionalString (izNiksDev && saizAtList.med)
-    (medLuaKod + optionalString saizAtList.max maxLuaKod));
+    + (optionalString (izNiksDev && saizAtList.med) (
+      medLuaKod + optionalString saizAtList.max maxLuaKod
+    ));
 
   luaVimrc = writeText "vimrc.lua" initLuaKod;
 
@@ -262,19 +322,23 @@ let
     luaformatter
   ];
 
-  maxPackages = with pkgs; [ ghc cabal-install stack ];
+  maxPackages = with pkgs; [
+    ghc
+    cabal-install
+    stack
+  ];
 
 in
 {
   home = {
-    packages = minPackages
-      ++ (optionals (izNiksDev && saizAtList.med)
-      (medPackages ++ (optionals saizAtList.max maxPackages)));
+    packages =
+      minPackages
+      ++ (optionals (izNiksDev && saizAtList.med) (
+        medPackages ++ (optionals saizAtList.max maxPackages)
+      ));
 
     sessionVariables = {
-      EDITOR =
-        if saizAtList.med then
-          "nvr -cc split --remote-wait +'set bufhidden=wipe'" else "nvim";
+      EDITOR = if saizAtList.med then "nvr -cc split --remote-wait +'set bufhidden=wipe'" else "nvim";
     };
   };
 
@@ -286,8 +350,7 @@ in
       vimAlias = true;
       plugins = vimlPloginz ++ luaPloginz;
 
-      extraConfig = readFile ./leftovers.vim
-        + "luafile ${luaVimrc}";
+      extraConfig = readFile ./leftovers.vim + "luafile ${luaVimrc}";
     };
 
   };

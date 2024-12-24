@@ -1,4 +1,8 @@
-{ librist, writeScriptBin, mksh }:
+{
+  librist,
+  writeScriptBin,
+  mksh,
+}:
 let
   senderPort = 8192;
   senderInputUrl = "udp://127.0.0.1:${toString senderPort}";

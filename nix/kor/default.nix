@@ -1,9 +1,36 @@
 let
   inherit (builtins)
-    catAttrs attrNames hasAttr getAttr mapAttrs listToAttrs concatStringsSep
-    foldl' elem length elemAt head tail filter concatMap sort lessThan fromJSON
-    toJSON readFile toFile intersectAttrs functionArgs typeOf isAttrs deepSeq
-    trace getFlake isList isFunction;
+    catAttrs
+    attrNames
+    hasAttr
+    getAttr
+    mapAttrs
+    listToAttrs
+    concatStringsSep
+    foldl'
+    elem
+    length
+    elemAt
+    head
+    tail
+    filter
+    concatMap
+    sort
+    lessThan
+    fromJSON
+    toJSON
+    readFile
+    toFile
+    intersectAttrs
+    functionArgs
+    typeOf
+    isAttrs
+    deepSeq
+    trace
+    getFlake
+    isList
+    isFunction
+    ;
 
 in
 rec {
@@ -12,19 +39,18 @@ rec {
 
   getAttrs = names: attrs: genAttrs names (name: attrs.${name});
 
-  genAttrs = names: f:
-    listToAttrs (map (n: nameValuePair n (f n)) names);
+  genAttrs = names: f: listToAttrs (map (n: nameValuePair n (f n)) names);
 
-  genNamedAttrs = names: f:
-    listToAttrs (map (n: f n) names);
+  genNamedAttrs = names: f: listToAttrs (map (n: f n) names);
 
-  zipAttrsWithNames = names: f: sets:
-    listToAttrs (map
-      (name: {
+  zipAttrsWithNames =
+    names: f: sets:
+    listToAttrs (
+      map (name: {
         inherit name;
         value = f name (catAttrs name sets);
-      })
-      names);
+      }) names
+    );
 
   zipAttrsWith = f: sets: zipAttrsWithNames (concatMap attrNames sets) f sets;
 
@@ -37,40 +63,53 @@ rec {
 
   optionalString = cond: string: if cond then string else "";
 
-  concatMapStringsSep = sep: f: list:
+  concatMapStringsSep =
+    sep: f: list:
     concatStringsSep sep (map f list);
 
   optionalAttrs = cond: set: if cond then set else { };
 
-  hasAttrByPath = attrPath: e:
-    let attr = head attrPath;
+  hasAttrByPath =
+    attrPath: e:
+    let
+      attr = head attrPath;
     in
-    if attrPath == [ ] then true
-    else if e ? ${attr}
-    then hasAttrByPath (tail attrPath) e.${attr}
-    else false;
+    if attrPath == [ ] then
+      true
+    else if e ? ${attr} then
+      hasAttrByPath (tail attrPath) e.${attr}
+    else
+      false;
 
-  attrByPath = attrPath: default: e:
-    let attr = head attrPath;
+  attrByPath =
+    attrPath: default: e:
+    let
+      attr = head attrPath;
     in
-    if attrPath == [ ] then e
-    else if e ? ${attr}
-    then attrByPath (tail attrPath) default e.${attr}
-    else default;
+    if attrPath == [ ] then
+      e
+    else if e ? ${attr} then
+      attrByPath (tail attrPath) default e.${attr}
+    else
+      default;
 
-  mapAttrs' = f: set:
-    listToAttrs (map (attr: f attr set.${attr}) (attrNames set));
+  mapAttrs' = f: set: listToAttrs (map (attr: f attr set.${attr}) (attrNames set));
 
-  concatMapAttrs = f: set:
-    listToAttrs (concatMap (attr: f attr set.${attr}) (attrNames set));
+  concatMapAttrs = f: set: listToAttrs (concatMap (attr: f attr set.${attr}) (attrNames set));
 
   invertValueName = set: mapAttrs' (n: v: nameValuePair "${v}" n) set;
 
-  filterAttrs = pred: set: listToAttrs (concatMap
-    (name:
-      let v = set.${name};
-      in if pred name v then [ (nameValuePair name v) ] else [ ])
-    (attrNames set));
+  filterAttrs =
+    pred: set:
+    listToAttrs (
+      concatMap (
+        name:
+        let
+          v = set.${name};
+        in
+        if pred name v then [ (nameValuePair name v) ] else [ ]
+      ) (attrNames set)
+    );
 
   remove = e: filter (x: x != e);
 
@@ -78,61 +117,63 @@ rec {
 
   subtractLists = e: filter (x: !(elem x e));
 
-  unique = list:
-    if list == [ ] then [ ] else
-    let x = head list;
-    in [ x ] ++ unique (remove x list);
+  unique =
+    list:
+    if list == [ ] then
+      [ ]
+    else
+      let
+        x = head list;
+      in
+      [ x ] ++ unique (remove x list);
 
-  flatten = x:
-    if isList x
-    then concatMap (y: flatten y) x
-    else [ x ];
+  flatten = x: if isList x then concatMap (y: flatten y) x else [ x ];
 
   flattenNV = list: map (x: x.value) list;
 
-  mapAttrsToList = f: attrs:
-    map (name: f name attrs.${name}) (attrNames attrs);
+  mapAttrsToList = f: attrs: map (name: f name attrs.${name}) (attrNames attrs);
 
   attrsToList = attrs: map (a: attrs.${a}) (attrNames attrs);
 
-  attrToNamedList = attrs:
-    mapAttrsToList (name: value: value // { inherit name; }) attrs;
+  attrToNamedList = attrs: mapAttrsToList (name: value: value // { inherit name; }) attrs;
 
-  makeSearchPath = subDir: paths: concatStringsSep ":"
-    (map (path: path + "/" + subDir) (filter (x: x != null) paths));
+  makeSearchPath =
+    subDir: paths: concatStringsSep ":" (map (path: path + "/" + subDir) (filter (x: x != null) paths));
 
-  getSpici = datom:
-    assert mesydj (isAttrs datom)
-      "Spici-Datom is not Attrs";
-    let neimz = attrNames datom; in
-    assert mesydj ((length neimz) == 1)
-      "Spici-Datom has more than one Attr";
+  getSpici =
+    datom:
+    assert mesydj (isAttrs datom) "Spici-Datom is not Attrs";
+    let
+      neimz = attrNames datom;
+    in
+    assert mesydj ((length neimz) == 1) "Spici-Datom has more than one Attr";
     let
       name = head neimz;
     in
-    { inherit name; value = datom.${name}; };
+    {
+      inherit name;
+      value = datom.${name};
+    };
 
-  matc = matcSet: datom:
+  matc =
+    matcSet: datom:
     let
       spici = getSpici datom;
       inherit (spici) name value;
       matcValiu = matcSet.${name};
     in
-    if isFunction matcValiu then
-      matcValiu value
-    else value;
+    if isFunction matcValiu then matcValiu value else value;
 
-  indeksSpiciz = spiciz:
+  indeksSpiciz =
+    spiciz:
     let
       aylSpiciz = map getSpici spiciz;
       neimz = unique (map (s: s.name) aylSpiciz);
-      meikNeimdYrei = neim:
-        map (s: s.value) (filter (s: s.name == neim) aylSpiciz);
+      meikNeimdYrei = neim: map (s: s.value) (filter (s: s.name == neim) aylSpiciz);
     in
     genAttrs neimz meikNeimdYrei;
 
-  matchEnum = enum: match:
-    genAttrs enum (name: name == match);
+  matchEnum = enum: match: genAttrs enum (name: name == match);
 
   louestOf = yrei: head (sort lessThan yrei);
 
@@ -142,7 +183,8 @@ rec {
 
   eksportJSON = neim: datom: toFile neim (toJSON datom);
 
-  getFleik = fleik:
+  getFleik =
+    fleik:
     let
       url = concatStringsSep "" [
         (optionalString (fleik.type == "git") "git+")
@@ -156,32 +198,28 @@ rec {
     in
     kol url;
 
-  kopiNiks = path: toFile (baseNameOf path)
-    (readFile path);
+  kopiNiks = path: toFile (baseNameOf path) (readFile path);
 
-  mkIf = condition: content:
-    {
-      _type = "if";
-      inherit condition content;
-    };
+  mkIf = condition: content: {
+    _type = "if";
+    inherit condition content;
+  };
 
-  mesydj = pred: msj:
-    if pred then true
-    else trace msj false;
+  mesydj = pred: msj: if pred then true else trace msj false;
 
-  traceSeq = x: y:
-    trace (builtins.deepSeq x x) y;
+  traceSeq = x: y: trace (builtins.deepSeq x x) y;
 
   mkStoreHashPrefix = object: builtins.substring 11 7 object.outPath;
 
-  mkImplicitVersion = src:
-    assert mesydj
-      ((hasAttr "shortRev" src) || (hasAttr "narHash" src))
-      "Missing implicit version hints";
+  mkImplicitVersion =
+    src:
+    assert mesydj (
+      (hasAttr "shortRev" src) || (hasAttr "narHash" src)
+    ) "Missing implicit version hints";
     let
       shortHash = cortHacString src.narHash;
     in
-      src.shortRev or shortHash;
+    src.shortRev or shortHash;
 
   hazSingylAttr = attrs: (length (attrNames attrs)) == 1;
 
@@ -189,12 +227,9 @@ rec {
 
   mkStringHash = String: builtins.hashString "sha256" String;
 
-  cortHacString = string:
-    builtins.substring 0 7 (mkStringHash string);
+  cortHacString = string: builtins.substring 0 7 (mkStringHash string);
 
-  cortHacFile = file:
-    builtins.substring 0 7
-      (builtins.hashFile "sha256" file);
+  cortHacFile = file: builtins.substring 0 7 (builtins.hashFile "sha256" file);
 
   arkSistymMap = {
     x86-64 = "x86_64-linux";
@@ -215,30 +250,41 @@ rec {
     max = saiz == 3;
   };
 
-  matcSaiz = saiz: ifNon: ifMin: ifMed: ifMax:
-    let saizAtList = mkSaizAtList saiz;
+  matcSaiz =
+    saiz: ifNon: ifMin: ifMed: ifMax:
+    let
+      saizAtList = mkSaizAtList saiz;
     in
-    if saizAtList.max then ifMax
-    else if saizAtList.med then ifMed
-    else if saizAtList.min then ifMin
-    else ifNon;
+    if saizAtList.max then
+      ifMax
+    else if saizAtList.med then
+      ifMed
+    else if saizAtList.min then
+      ifMin
+    else
+      ifNon;
 
-  mkLamdy = { klozyr, lamdy }:
+  mkLamdy =
+    { klozyr, lamdy }:
     let
       rykuestydDatomz = functionArgs lamdy;
       rytyrndDatomz = intersectAttrs rykuestydDatomz klozyr;
     in
     lamdy rytyrndDatomz;
 
-  mkLamdyz = { lamdyz, klozyr }:
-    mapAttrs
-      (n: v:
-        mkLamdy { inherit klozyr; lamdy = v; }
-      )
-      lamdyz;
+  mkLamdyz =
+    { lamdyz, klozyr }:
+    mapAttrs (
+      n: v:
+      mkLamdy {
+        inherit klozyr;
+        lamdy = v;
+      }
+    ) lamdyz;
 
   # TODO(desc: "remove", tags: [ "mkHyraizyn" ])
-  spiciDatum = { datum, spek }:
+  spiciDatum =
+    { datum, spek }:
     let
       inherit (datum) spici;
       allSpeksNeimz = concatMap (n: getAttr n spek) (attrNames spek);
@@ -248,11 +294,13 @@ rec {
     in
     removeAttrs datum unwantedAttrs;
 
-  rem = a: b:
-    a - (b * (a / b));
+  rem = a: b: a - (b * (a / b));
 
-  isOdd = number:
-    let remainder = rem number 2; in
+  isOdd =
+    number:
+    let
+      remainder = rem number 2;
+    in
     remainder == 1;
 
 }

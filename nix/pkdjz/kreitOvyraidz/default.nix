@@ -1,15 +1,16 @@
-{ kor
-, systemd
-, cryptsetup
-, llvmPackages
-, pkg-config
-, utillinux
-, cmake
-, python2
-, fontconfig
-, bzip2
-, freetype
-, expat
+{
+  kor,
+  systemd,
+  cryptsetup,
+  llvmPackages,
+  pkg-config,
+  utillinux,
+  cmake,
+  python2,
+  fontconfig,
+  bzip2,
+  freetype,
+  expat,
 }:
 let
   inherit (kor) concatMapStringsSep;
@@ -20,8 +21,7 @@ let
 
   clang = llvmPackages.clang-unwrapped;
 
-  mkClangIncludes = list:
-    concatMapStringsSep " " (x: "--include-directory=${x}") list;
+  mkClangIncludes = list: concatMapStringsSep " " (x: "--include-directory=${x}") list;
 
 in
 {
@@ -31,26 +31,47 @@ in
 
   libudev-sys = attrs: {
     PKG_CONFIG_PATH = "${systemd.dev}/lib/pkg-config";
-    buildInputs = [ pkg-config systemd.dev ];
+    buildInputs = [
+      pkg-config
+      systemd.dev
+    ];
   };
 
   libcryptsetup-rs-sys = attrs: {
     PKG_CONFIG_PATH = "${cryptsetupDev}/lib/pkg-config";
     LIBCLANG_PATH = "${libclang}/lib";
-    BINDGEN_EXTRA_CLANG_ARGS = mkClangIncludes [ "${cryptsetupDev}/include" "${clang}/lib/clang/${clang.version}/include/" ];
-    buildInputs = [ pkg-config cryptsetupDev libclang ];
+    BINDGEN_EXTRA_CLANG_ARGS = mkClangIncludes [
+      "${cryptsetupDev}/include"
+      "${clang}/lib/clang/${clang.version}/include/"
+    ];
+    buildInputs = [
+      pkg-config
+      cryptsetupDev
+      libclang
+    ];
   };
 
   libcryptsetup-rs = attrs: {
-    buildInputs = [ pkg-config cryptsetupDev ];
+    buildInputs = [
+      pkg-config
+      cryptsetupDev
+    ];
   };
 
   libstratis = attrs: {
-    buildInputs = [ pkg-config cryptsetupDev utillinux ];
+    buildInputs = [
+      pkg-config
+      cryptsetupDev
+      utillinux
+    ];
   };
 
   expat-sys = attrs: {
-    buildInputs = [ pkg-config expat cmake ];
+    buildInputs = [
+      pkg-config
+      expat
+      cmake
+    ];
   };
 
   skia-bindings = attrs: {
@@ -58,15 +79,25 @@ in
   };
 
   servo-fontconfig-sys = attrs: {
-    buildInputs = [ pkg-config fontconfig ];
+    buildInputs = [
+      pkg-config
+      fontconfig
+    ];
   };
 
   bzip2-sys = attrs: {
-    buildInputs = [ pkg-config bzip2 ];
+    buildInputs = [
+      pkg-config
+      bzip2
+    ];
   };
 
   freetype-sys = attrs: {
-    buildInputs = [ pkg-config freetype cmake ];
+    buildInputs = [
+      pkg-config
+      freetype
+      cmake
+    ];
   };
 
 }

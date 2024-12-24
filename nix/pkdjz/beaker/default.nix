@@ -1,4 +1,8 @@
-{ stdenv, appimageTools, fetchurl }:
+{
+  stdenv,
+  appimageTools,
+  fetchurl,
+}:
 
 appimageTools.wrapType2 {
   name = "beakerbrowser";

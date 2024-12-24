@@ -1,4 +1,8 @@
-{ stdenv, src, sbcl }:
+{
+  stdenv,
+  src,
+  sbcl,
+}:
 
 stdenv.mkDerivation {
   pname = "shen";

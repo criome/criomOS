@@ -5,7 +5,10 @@ stdenv.mkDerivation rec {
   version = src.shortRev;
   inherit src;
 
-  phases = [ "unpackPhase" "installPhase" ];
+  phases = [
+    "unpackPhase"
+    "installPhase"
+  ];
 
   installPhase = ''
     mkdir -p $out/lib/shen

@@ -183,11 +183,19 @@ in
       enable = true;
       systemdTarget = "hyprland-session.target";
       timeouts = [
-        { timeout = 300; command = turnOffScreens; resumeCommand = turnOnScreens; }
-        { timeout = 900; command = lockScreen; }
+        {
+          timeout = 300;
+          command = turnOffScreens;
+          resumeCommand = turnOnScreens;
+        }
+        {
+          timeout = 900;
+          command = lockScreen;
+        }
       ];
-      events = [
-      ];
+      events =
+        [
+        ];
     };
   };
 }

@@ -1,4 +1,9 @@
-{ kor, lib, user, ... }:
+{
+  kor,
+  lib,
+  user,
+  ...
+}:
 let
   inherit (kor) optional;
 

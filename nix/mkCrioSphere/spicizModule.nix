@@ -1,20 +1,54 @@
-{ kor, lib, config, priMetastriz, ... }:
+{
+  kor,
+  lib,
+  config,
+  priMetastriz,
+  ...
+}:
 let
   inherit (builtins) attrNames attrValues;
   inherit (kor) arkSistymMap;
   inherit (lib) mkOption;
-  inherit (lib.types) enum str attrsOf submodule nullOr bool int
-    listOf attrs;
+  inherit (lib.types)
+    enum
+    str
+    attrsOf
+    submodule
+    nullOr
+    bool
+    int
+    listOf
+    attrs
+    ;
 
-  magnytiud = [ 0 1 2 3 ];
+  magnytiud = [
+    0
+    1
+    2
+    3
+  ];
 
   mycinArkz = attrNames arkSistymMap;
   sistymz = attrValues arkSistymMap;
 
-  butlodyrz = [ "uefi" "mbr" "uboot" ];
-  kibordz = [ "qwerty" "colemak" ];
+  butlodyrz = [
+    "uefi"
+    "mbr"
+    "uboot"
+  ];
+  kibordz = [
+    "qwerty"
+    "colemak"
+  ];
 
-  astriSpiciz = [ "sentyr" "haibrid" "edj" "edjTesting" "mediaBroadcast" "router" ];
+  astriSpiciz = [
+    "sentyr"
+    "haibrid"
+    "edj"
+    "edjTesting"
+    "mediaBroadcast"
+    "router"
+  ];
 
   metastriNeimz = attrNames priMetastriz;
 
@@ -37,12 +71,19 @@ let
     };
 
     spici = mkOption {
-      type = enum [ "Niks" "Sema" "Onlimityd" ];
+      type = enum [
+        "Niks"
+        "Sema"
+        "Onlimityd"
+      ];
       default = "Sema";
     };
 
     stail = mkOption {
-      type = enum [ "vim" "emacs" ];
+      type = enum [
+        "vim"
+        "emacs"
+      ];
       default = "emacs";
     };
 
@@ -51,7 +92,10 @@ let
     };
 
     kibord = mkOption {
-      type = enum [ "colemak" "qwerty" ];
+      type = enum [
+        "colemak"
+        "qwerty"
+      ];
       default = "colemak";
     };
 
@@ -65,7 +109,10 @@ let
   mycinSpici = submodule {
     options = {
       spici = mkOption {
-        type = enum [ "metyl" "pod" ];
+        type = enum [
+          "metyl"
+          "pod"
+        ];
         default = "metyl";
       };
 
@@ -135,8 +182,17 @@ in
   };
 
   config.spiciz = {
-    inherit komynUserOptions IoOptions mycinSpici kibordz butlodyrz magnytiud
-      metastriNeimz astriSpiciz sistymz;
+    inherit
+      komynUserOptions
+      IoOptions
+      mycinSpici
+      kibordz
+      butlodyrz
+      magnytiud
+      metastriNeimz
+      astriSpiciz
+      sistymz
+      ;
   };
 
 }

@@ -8,20 +8,23 @@ let
 
   mkImplaidSpoks = neim: spok: spok;
 
-  spoks = eksplisitSpoks
-    // (mapAttrs (n: s: s) implaidSpoks);
+  spoks = eksplisitSpoks // (mapAttrs (n: s: s) implaidSpoks);
 
   ovyraidzIndeks = { };
 
-  mkSpok = neim: self:
+  mkSpok =
+    neim: self:
     let
       ovyraidz = ovyraidzIndeks.${neim} or { };
     in
-    bildNvimPlogin ({
-      pname = neim;
-      version = self.shortRev;
-      src = self;
-    } // ovyraidz);
+    bildNvimPlogin (
+      {
+        pname = neim;
+        version = self.shortRev;
+        src = self;
+      }
+      // ovyraidz
+    );
 
   ryzylt = mapAttrs mkSpok spoks;
 

@@ -1,11 +1,16 @@
-inputs@{ src, lib, pkgs, system }:
+inputs@{
+  src,
+  lib,
+  pkgs,
+  system,
+}:
 
-argz@
-{ pkgs ? inputs.pkgs
-, modules ? [ ]
-, moduleArgs ? { }
-, iuzQemuVmModule ? false
-, iuzIsoModule ? false
+argz@{
+  pkgs ? inputs.pkgs,
+  modules ? [ ],
+  moduleArgs ? { },
+  iuzQemuVmModule ? false,
+  iuzIsoModule ? false,
 }:
 let
   inherit (lib) evalModules optional;
@@ -19,19 +24,22 @@ let
     modulesPath = toString (src + /nixos/modules);
   };
 
-  nixpkgsConfig = { nixpkgs = { inherit pkgs; }; };
+  nixpkgsConfig = {
+    nixpkgs = {
+      inherit pkgs;
+    };
+  };
 
-  nixpkgsModules = [ nixpkgsConfig src.nixosModules.readOnlyPkgs ];
+  nixpkgsModules = [
+    nixpkgsConfig
+    src.nixosModules.readOnlyPkgs
+  ];
 
-  baseModules = import (src + /nixos/modules/module-list.nix)
-    ++ nixpkgsModules;
+  baseModules = import (src + /nixos/modules/module-list.nix) ++ nixpkgsModules;
 
+  qemuVmModule = import (src + /nixos/modules/virtualisation/qemu-vm.nix);
 
-  qemuVmModule = import
-    (src + /nixos/modules/virtualisation/qemu-vm.nix);
-
-  isoImageModule = import
-    (src + /nixos/modules/installer/cd-dvd/iso-image.nix);
+  isoImageModule = import (src + /nixos/modules/installer/cd-dvd/iso-image.nix);
 
   moduleArgsModule = {
     _module.args = {
@@ -42,7 +50,9 @@ let
 in
 evalModules {
   inherit specialArgs;
-  modules = argz.modules ++ baseModules
+  modules =
+    argz.modules
+    ++ baseModules
     ++ [ moduleArgsModule ]
     ++ (optional iuzQemuVmModule qemuVmModule)
     ++ (optional iuzIsoModule isoImageModule);

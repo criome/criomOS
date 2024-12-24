@@ -1,4 +1,8 @@
-{ hob, bildNvimPlogin, fzf }:
+{
+  hob,
+  bildNvimPlogin,
+  fzf,
+}:
 let
   inherit (builtins) mapAttrs;
 
@@ -12,8 +16,7 @@ let
     plenary-kor = hob.plenary-nvim;
   };
 
-  spoks = eksplisitSpoks
-    // (mapAttrs (n: s: s) implaidSpoks);
+  spoks = eksplisitSpoks // (mapAttrs (n: s: s) implaidSpoks);
 
   ovyraidzIndeks = {
     plenary-kor = {
@@ -26,18 +29,31 @@ let
     };
   };
 
-  bildNvimLuaPlogin = { neim, self, ovyraidz }:
+  bildNvimLuaPlogin =
+    {
+      neim,
+      self,
+      ovyraidz,
+    }:
     let
     in
-    bildNvimPlogin ({
-      pname = neim;
-      version = self.shortRev;
-      src = self;
-      namePrefix = "nvimLuaPlogin";
-      components = [ "lua" "queries" "doc" ];
-    } // ovyraidz);
+    bildNvimPlogin (
+      {
+        pname = neim;
+        version = self.shortRev;
+        src = self;
+        namePrefix = "nvimLuaPlogin";
+        components = [
+          "lua"
+          "queries"
+          "doc"
+        ];
+      }
+      // ovyraidz
+    );
 
-  mkSpok = neim: self:
+  mkSpok =
+    neim: self:
     let
       ovyraidz = ovyraidzIndeks.${neim} or { };
     in

@@ -1,16 +1,34 @@
-{ kor, hyraizyn, config, pkgs, lib, uyrld, pkdjz, ... }:
+{
+  kor,
+  hyraizyn,
+  config,
+  pkgs,
+  lib,
+  uyrld,
+  pkdjz,
+  ...
+}:
 let
-  inherit (kor) mkIf optional optionals optionalString optionalAttrs;
+  inherit (kor)
+    mkIf
+    optional
+    optionals
+    optionalString
+    optionalAttrs
+    ;
   inherit (lib) mkOverride;
 
   inherit (hyraizyn.astra) typeIs;
   inherit (hyraizyn.astra.spinyrz) saizAtList;
 
-  minPackages = optionals saizAtList.min (with pkgs; [
-    adwaita-icon-theme
-    nautilus
-    libinput
-  ]);
+  minPackages = optionals saizAtList.min (
+    with pkgs;
+    [
+      adwaita-icon-theme
+      nautilus
+      libinput
+    ]
+  );
 
   medPackages = with pkgs; [ ];
 
@@ -24,9 +42,9 @@ in
   };
 
   environment = {
-    systemPackages = with pkgs; minPackages
-      ++ (optionals saizAtList.med medPackages
-      ++ (optionals saizAtList.max maxPackages));
+    systemPackages =
+      with pkgs;
+      minPackages ++ (optionals saizAtList.med medPackages ++ (optionals saizAtList.max maxPackages));
 
     gnome.excludePackages = with pkgs; [
       gnome-software

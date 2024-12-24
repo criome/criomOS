@@ -1,13 +1,19 @@
-{ pkgs, pkdjz, user, crioZone, profile, ... }:
+{
+  pkgs,
+  pkdjz,
+  user,
+  crioZone,
+  profile,
+  ...
+}:
 let
-  inherit (pkdjz) meikImaks ;
+  inherit (pkdjz) meikImaks;
   package = meikImaks { inherit user profile; };
 
 in
 {
   home = {
-    packages = [ package ]
-      ++ (with pkgs; [ nil ]);
+    packages = [ package ] ++ (with pkgs; [ nil ]);
 
     sessionVariables = {
       EDITOR = "emacsclient -c";

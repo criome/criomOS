@@ -1,11 +1,22 @@
-{ kor, pkgs, hyraizyn, konstynts, ... }:
+{
+  kor,
+  pkgs,
+  hyraizyn,
+  konstynts,
+  ...
+}:
 let
   inherit (builtins) mapAttrs attrNames filter;
   inherit (kor) mkIf optionalString;
   inherit (hyraizyn.astra.spinyrz) izYggCriodaizd;
   inherit (konstynts) fileSystem;
-  inherit (konstynts.fileSystem.yggdrasil) preCriadJson
-    subDirName preCriomeJson interfaceName combinedConfigJson;
+  inherit (konstynts.fileSystem.yggdrasil)
+    preCriadJson
+    subDirName
+    preCriomeJson
+    interfaceName
+    combinedConfigJson
+    ;
   inherit (konstynts.network.yggdrasil) ports;
 
   package = pkgs.yggdrasil;
@@ -15,10 +26,12 @@ let
 
   yggCriodFilterSocket = fileSystem.systemd.runtimeDirectory + "/yggCriodFilter";
 
-  mkConfigFile = conf: pkgs.writeTextFile {
-    name = "yggdrasilConf.json";
-    text = builtins.toJSON conf;
-  };
+  mkConfigFile =
+    conf:
+    pkgs.writeTextFile {
+      name = "yggdrasilConf.json";
+      text = builtins.toJSON conf;
+    };
 
   yggdrasilConfig = {
     IfName = "yggTun";
@@ -53,7 +66,7 @@ in
   environment.systemPackages = [ package ];
 
   networking.firewall = {
-    allowedUDPPorts = [  ports.multicast ];
+    allowedUDPPorts = [ ports.multicast ];
     allowedTCPPorts = [ ports.linkLocalTCP ];
     trustedInterfaces = [ interfaceName ];
   };
@@ -74,7 +87,7 @@ in
         postStart = optionalString seedYggdrasil extractPreCriomeJson;
 
         serviceConfig = {
-          ExecStart = '' 
+          ExecStart = ''
             ${yggExec} -useconffile ${combinedConfigJson}
           '';
 
@@ -98,7 +111,10 @@ in
           RestrictNamespaces = true;
           RestrictRealtime = true;
           SystemCallArchitectures = "native";
-          SystemCallFilter = [ "@system-service" "~@privileged @keyring" ];
+          SystemCallFilter = [
+            "@system-service"
+            "~@privileged @keyring"
+          ];
         };
       };
     };

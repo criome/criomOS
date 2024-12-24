@@ -1,4 +1,8 @@
-{ src, stdenv, ffmpeg }:
+{
+  src,
+  stdenv,
+  ffmpeg,
+}:
 stdenv.mkDerivation {
   name = "remux";
 

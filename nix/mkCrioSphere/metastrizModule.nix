@@ -1,10 +1,29 @@
-{ lib, priMetastriz, config, ... }@topArgs:
+{
+  lib,
+  priMetastriz,
+  config,
+  ...
+}@topArgs:
 let
   inherit (builtins) mapAttrs attrNames listToAttrs;
   inherit (lib) mkOption nameValuePair;
-  inherit (lib.types) enum str attrsOf submodule nullOr attrs listOf;
-  inherit (config.spiciz) magnytiud metastriNeimz astriSpiciz
-    komynUserOptions mycinSpici IoOptions;
+  inherit (lib.types)
+    enum
+    str
+    attrsOf
+    submodule
+    nullOr
+    attrs
+    listOf
+    ;
+  inherit (config.spiciz)
+    magnytiud
+    metastriNeimz
+    astriSpiciz
+    komynUserOptions
+    mycinSpici
+    IoOptions
+    ;
 
   AstriPreCriomeSpici = submodule {
     options = {
@@ -86,12 +105,9 @@ let
     };
   };
 
-
   defaultTrost = 1;
 
-  mkDefaultTrostFromNeimz = neimz: listToAttrs
-    (map (n: nameValuePair n defaultTrost))
-    neimz;
+  mkDefaultTrostFromNeimz = neimz: listToAttrs (map (n: nameValuePair n defaultTrost)) neimz;
 
   trostSubmodule = {
     options = {
@@ -127,11 +143,11 @@ let
     options = komynUserOptions;
   };
 
-  metastriSubmodule = ({ name, config, ... }@metastriArgs:
+  metastriSubmodule = (
+    { name, config, ... }@metastriArgs:
     let
       priMetastri = priMetastriz."${name}";
-      mkDefaultAstriTrost = name: astri:
-        priMetastri.trost.astriz."${name}" or 1;
+      mkDefaultAstriTrost = name: astri: priMetastri.trost.astriz."${name}" or 1;
     in
     {
       options = {
@@ -175,7 +191,8 @@ let
           });
         };
       };
-    });
+    }
+  );
 
 in
 {
@@ -189,6 +206,6 @@ in
     };
   };
 
-  /* Normalize Metastriz here */
+  # Normalize Metastriz here
   config.Metastriz = priMetastriz;
 }
