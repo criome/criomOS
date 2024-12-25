@@ -3,7 +3,12 @@
 
   inputs = {
     hob.url = "github:criome/hob/17thScorpio5918AM";
+
     attic.url = "github:zhaofengli/attic";
+
+    maisiliym.url = "github:LiGoldragon/maisiliym";
+    goldragon.url = "github:LiGoldragon/goldragon";
+    seahawk.url = "github:criome/seahawk";
   };
 
   outputs =
@@ -86,7 +91,7 @@
       generateCrioSphereProposalFromName =
         name:
         let
-          subCriomeConfig = hob."${name}".NeksysProposal or { };
+          subCriomeConfig = inputs."${name}".NeksysProposal or { };
           explicitNodes = subCriomeConfig.astriz or { };
           implicitNodes = import ./implicitNodes.nix;
           allNodes = explicitNodes // implicitNodes;

@@ -549,14 +549,12 @@
         "flake-parts": "flake-parts_2",
         "flake-registry": "flake-registry",
         "flake-utils": "flake-utils_2",
-        "goldragon": "goldragon",
         "goldragonWebpage": "goldragonWebpage",
         "helix": "helix",
         "home-manager": "home-manager",
         "kibord": "kibord",
         "lib": "lib",
         "lojix": "lojix",
-        "maisiliym": "maisiliym",
         "md-roam": "md-roam",
         "mfgtools": "mfgtools",
         "mkZolaWebsite": "mkZolaWebsite",
@@ -565,11 +563,9 @@
         "nix-fetcher-data": "nix-fetcher-data",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-lib": "nixpkgs-lib",
-        "nixpkgs-master": "nixpkgs-master",
         "postcss-scss": "postcss-scss",
         "rust-overlay": "rust-overlay",
         "sajban": "sajban",
-        "seahawk": "seahawk",
         "seahawkWebsite": "seahawkWebsite",
         "shen": "shen",
         "shen-mode": "shen-mode",
@@ -585,11 +581,11 @@
         "xdg-desktop-portal-hyprland": "xdg-desktop-portal-hyprland"
       },
       "locked": {
-        "lastModified": 1731098065,
-        "narHash": "sha256-m/MwC+jv3RefNuAwKOUAts/qFhWA1iiF8ORVbfjHQ0I=",
+        "lastModified": 1735151044,
+        "narHash": "sha256-Y5xGfGnSX/pv8RRxI5J73rqr1nLij7B7eHZGz9wyZJs=",
         "owner": "criome",
         "repo": "hob",
-        "rev": "157f2fa4070c4fc877b92f44b72f9647207dad05",
+        "rev": "a121eedc8e09a6c5725b31c3e712b32c78e74cdd",
         "type": "github"
       },
       "original": {
@@ -873,11 +869,11 @@
     },
     "maisiliym": {
       "locked": {
-        "lastModified": 1730039186,
-        "narHash": "sha256-cLf4/fRyPije7pwEc/r7/bQrbCL39SoYoHBYgeUO010=",
+        "lastModified": 1735148991,
+        "narHash": "sha256-lyE6mk36FENtpIXGoDxQQR/dzo9FSTEn32l7dDg4DTc=",
         "owner": "LiGoldragon",
         "repo": "maisiliym",
-        "rev": "93818c422557fb27d12443b42483ef8cd2bb9219",
+        "rev": "3080c42d0f31aae10b1d371e73cb48d6624e807c",
         "type": "github"
       },
       "original": {
@@ -1079,20 +1075,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-master": {
-      "locked": {
-        "lastModified": 1727092178,
-        "narHash": "sha256-Dv5Y24VlAkVpVLSTpqg7BViAKGzvK2rR7YrV7450kEI=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "71ade9dfb57c26717fe3b973c046e56fdc318145",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs-master",
-        "type": "indirect"
-      }
-    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1724316499,
@@ -1193,7 +1175,10 @@
     "root": {
       "inputs": {
         "attic": "attic",
-        "hob": "hob"
+        "goldragon": "goldragon",
+        "hob": "hob",
+        "maisiliym": "maisiliym",
+        "seahawk": "seahawk"
       }
     },
     "rust-overlay": {
