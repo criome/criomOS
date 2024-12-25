@@ -385,11 +385,6 @@ mkIf saizAtList.min {
       settings = { };
     };
 
-    helix = {
-      enable = true;
-      package = uyrld.helix.packages.default;
-    };
-
     htop = {
       enable = true;
       settings = {
