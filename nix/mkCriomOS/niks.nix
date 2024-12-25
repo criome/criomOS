@@ -27,6 +27,7 @@ let
     bildyrKonfigz
     kacURLz
     dispatcyrzEseseitcKiz
+    exAstrizEseseitcPreCriomes
     saizAtList
     izBildyr
     izNiksKac
@@ -210,6 +211,9 @@ in
 
       auto-optimise-store = true;
     };
+
+    sshServe.enable = true;
+    sshServe.keys = exAstrizEseseitcPreCriomes;
 
     # Lowest priorities
     daemonCPUSchedPolicy = "idle";
