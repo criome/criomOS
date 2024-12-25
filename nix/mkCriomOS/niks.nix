@@ -27,6 +27,7 @@ let
     bildyrKonfigz
     kacURLz
     dispatcyrzEseseitcKiz
+    exAstrizEseseitcPreCriomes
     saizAtList
     izBildyr
     izNiksKac
@@ -209,8 +210,10 @@ in
       trusted-binary-caches = kacURLz;
 
       auto-optimise-store = true;
-
     };
+
+    sshServe.enable = true;
+    sshServe.keys = exAstrizEseseitcPreCriomes;
 
     # Lowest priorities
     daemonCPUSchedPolicy = "idle";
