@@ -385,9 +385,15 @@ mkIf saizAtList.min {
       settings = { };
     };
 
-    helix = {
+    zed-editor = {
       enable = true;
-      package = uyrld.helix.packages.default;
+      package = pkgs.zed-editor;
+      extraPackages = with pkgs; [
+        nixd
+      ];
+      userKeymaps = { };
+      userSettings = { };
+      extensions = [ ];
     };
 
     htop = {
