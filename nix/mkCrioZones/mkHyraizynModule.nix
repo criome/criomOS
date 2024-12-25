@@ -344,9 +344,7 @@ let
     neim = metastraNeim;
 
     spinyrz = {
-      trostydBildPreCriomes =
-        map (n: exAstriz.${n}.spinyrz.nixPreCriome) bildyrz
-        ++ (optional astra.spinyrz.izNiksCriodaizd astra.spinyrz.nixPreCriome);
+      trostydBildPreCriomes = map (n: astriz.${n}.spinyrz.nixPreCriome) astriNeimz;
     };
   };
 
