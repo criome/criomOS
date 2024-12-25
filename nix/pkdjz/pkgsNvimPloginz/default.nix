@@ -1,9 +1,16 @@
-{ self, kor, lib, pkgs, bildNvimPlogin }:
+{
+  self,
+  kor,
+  lib,
+  pkgs,
+  bildNvimPlogin,
+}:
 let
   inherit (kor) mkLamdy;
 
-  ovyridynPkgs = pkgs
-    // { buildVimPluginFrom2Nix = bildNvimPlogin; };
+  ovyridynPkgs = pkgs // {
+    buildVimPluginFrom2Nix = bildNvimPlogin;
+  };
 
   overridesLamdy = import (self + /pkgs/misc/vim-plugins/overrides.nix);
 
@@ -14,8 +21,9 @@ let
 
   lamdy = import (self + /pkgs/misc/vim-plugins/generated.nix);
 
-  klozyr = ovyridynPkgs //
-    { inherit overrides; };
+  klozyr = ovyridynPkgs // {
+    inherit overrides;
+  };
 
   plugins = mkLamdy {
     inherit lamdy klozyr;

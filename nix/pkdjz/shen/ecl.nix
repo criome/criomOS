@@ -1,8 +1,9 @@
-{ lib
-, stdenv
-, fetchurl
-, shen-sources
-, ecl
+{
+  lib,
+  stdenv,
+  fetchurl,
+  shen-sources,
+  ecl,
 }:
 
 stdenv.mkDerivation rec {

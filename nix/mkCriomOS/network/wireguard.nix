@@ -1,10 +1,29 @@
-{ kor, pkgs, hyraizyn, konstynts, pkdjz, ... }:
+{
+  kor,
+  pkgs,
+  hyraizyn,
+  konstynts,
+  pkdjz,
+  ...
+}:
 let
-  inherit (builtins) mapAttrs attrNames filter concatStringsSep;
-  inherit (kor) mkIf mapAttrsToList optionalAttrs filterAttrs;
+  inherit (builtins)
+    mapAttrs
+    attrNames
+    filter
+    concatStringsSep
+    ;
+  inherit (kor)
+    mkIf
+    mapAttrsToList
+    optionalAttrs
+    filterAttrs
+    ;
   inherit (hyraizyn) astra exAstriz;
-  inherit (hyraizyn.astra.spinyrz) hazWireguardPreCriome
-    wireguardUntrustedProxies;
+  inherit (hyraizyn.astra.spinyrz)
+    hazWireguardPreCriome
+    wireguardUntrustedProxies
+    ;
 
   mkUntrustedProxy = untrustedProxy: {
     inherit (wireguardUntrustedProxies) publicKey endpoint;
@@ -23,8 +42,7 @@ let
     endpoint = "wg.${astri.criomOSNeim}:51820";
   };
 
-  criomeaizdPriNeksiz = filterAttrs (n: v: v.spinyrz.hazWireguardPreCriome)
-    exAstriz;
+  criomeaizdPriNeksiz = filterAttrs (n: v: v.spinyrz.hazWireguardPreCriome) exAstriz;
 
   neksysPeers = mapAttrsToList mkNeksysPeer criomeaizdPriNeksiz;
 

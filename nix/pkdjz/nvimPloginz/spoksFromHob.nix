@@ -7,5 +7,6 @@ hob: {
     nvim-base16-lua
     tokei-vim
     vim-shen
-    zoxide-vim;
+    zoxide-vim
+    ;
 }

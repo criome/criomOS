@@ -1,11 +1,24 @@
-{ pkgs, lib, stdenv, fetchFromGitHub, obs-studio, cmake, qt6Packages, ndi }:
+{
+  pkgs,
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  obs-studio,
+  cmake,
+  qt6Packages,
+  ndi,
+}:
 
 stdenv.mkDerivation rec {
   pname = "obs-ndi";
   version = "4.11.1";
 
   nativeBuildInputs = [ cmake ];
-  buildInputs = [ obs-studio qt6Packages.qtbase ndi ];
+  buildInputs = [
+    obs-studio
+    qt6Packages.qtbase
+    ndi
+  ];
 
   src = fetchFromGitHub {
     owner = "Palakis";

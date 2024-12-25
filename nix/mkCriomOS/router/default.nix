@@ -1,4 +1,9 @@
-{ lib, hyraizyn, config, ... }:
+{
+  lib,
+  hyraizyn,
+  config,
+  ...
+}:
 let
   l = lib // builtins;
   inherit (hyraizyn.astra) typeIs;
@@ -67,7 +72,7 @@ in
       radios = {
         wlan0 = {
           band = "2g";
-	  channel = 1;
+          channel = 1;
           countryCode = "PL";
           wifi4.enable = true;
           networks = {
@@ -75,9 +80,11 @@ in
               ssid = "wifi-name";
               authentication = {
                 mode = "wpa3-sae";
-                saePasswords = [{ password = "leavesarealsoalive"; }];
+                saePasswords = [ { password = "leavesarealsoalive"; } ];
               };
-              settings = { bridge = lanBridgeInterface; };
+              settings = {
+                bridge = lanBridgeInterface;
+              };
             };
           };
         };
@@ -99,11 +106,18 @@ in
             persist = true;
             name = "/var/lib/kea/dhcp4.leases";
           };
-          subnet4 = [{
-            subnet = lanFullAdress;
-            pools = [{ pool = "${lanSubnetPrefix}.100 - ${lanSubnetPrefix}.240"; }];
-            option-data = [{ name = "routers"; data = lanAddress; }];
-          }];
+          subnet4 = [
+            {
+              subnet = lanFullAdress;
+              pools = [ { pool = "${lanSubnetPrefix}.100 - ${lanSubnetPrefix}.240"; } ];
+              option-data = [
+                {
+                  name = "routers";
+                  data = lanAddress;
+                }
+              ];
+            }
+          ];
         };
       };
     };

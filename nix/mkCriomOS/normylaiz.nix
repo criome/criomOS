@@ -1,8 +1,23 @@
-{ config, kor, hyraizyn, pkgs, lib, uyrld, ... }:
+{
+  config,
+  kor,
+  hyraizyn,
+  pkgs,
+  lib,
+  uyrld,
+  ...
+}:
 let
   l = lib // builtins;
   inherit (kor) mapAttrsToList eksportJSON;
-  inherit (lib) concatStringsSep mkOverride optional mkIf optionalString optionalAttrs;
+  inherit (lib)
+    concatStringsSep
+    mkOverride
+    optional
+    mkIf
+    optionalString
+    optionalAttrs
+    ;
   inherit (pkgs) mksh writeScript gnupg;
   inherit (hyraizyn) astra exAstriz;
   inherit (hyraizyn.astra) typeIs;
@@ -17,11 +32,14 @@ let
 
   criomOSShell = mksh + mksh.shellPath;
 
-  mkAstriKnownHost = n: astri:
-    concatStringsSep " " [ astri.criomOSNeim astri.eseseitc ];
+  mkAstriKnownHost =
+    n: astri:
+    concatStringsSep " " [
+      astri.criomOSNeim
+      astri.eseseitc
+    ];
 
-  sshKnownHosts = concatStringsSep "\n"
-    (mapAttrsToList mkAstriKnownHost exAstriz);
+  sshKnownHosts = concatStringsSep "\n" (mapAttrsToList mkAstriKnownHost exAstriz);
 
 in
 {
@@ -30,8 +48,13 @@ in
 
     kernelPackages = pkgs.linuxPackages_latest;
 
-    supportedFilesystems = mkOverride 50
-      ([ "xfs" "btrfs" ] ++ (optional saizAtList.min "exfat"));
+    supportedFilesystems = mkOverride 50 (
+      [
+        "xfs"
+        "btrfs"
+      ]
+      ++ (optional saizAtList.min "exfat")
+    );
   };
 
   documentation = {
@@ -44,11 +67,10 @@ in
     shells = [ "/run/current-system/sw${mksh.shellPath}" ];
 
     etc = {
-      "systemd/user-environment-generators/ssh-sock.sh".source =
-        writeScript "user-ssh-sock.sh" ''
-          #!${pkgs.mksh}/bin/mksh
-            echo "SSH_AUTH_SOCK=$(${gnupg}/bin/gpgconf --list-dirs agent-ssh-socket)"
-        '';
+      "systemd/user-environment-generators/ssh-sock.sh".source = writeScript "user-ssh-sock.sh" ''
+        #!${pkgs.mksh}/bin/mksh
+          echo "SSH_AUTH_SOCK=$(${gnupg}/bin/gpgconf --list-dirs agent-ssh-socket)"
+      '';
       "ssh/ssh_known_hosts".text = sshKnownHosts;
       "hyraizyn.json" = {
         source = jsonHyraizynFail;
@@ -63,10 +85,12 @@ in
     ];
 
     interactiveShellInit = optionalString iuzColemak "stty -ixon";
-    sessionVariables = (optionalAttrs iuzColemak {
-      XKB_DEFAULT_LAYOUT = "us";
-      XKB_DEFAULT_VARIANT = "colemak";
-    });
+    sessionVariables = (
+      optionalAttrs iuzColemak {
+        XKB_DEFAULT_LAYOUT = "us";
+        XKB_DEFAULT_VARIANT = "colemak";
+      }
+    );
   };
 
   # Overlays are bad - force them off

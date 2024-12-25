@@ -1,11 +1,28 @@
-{ config, lib, pkgs, hyraizyn, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  hyraizyn,
+  ...
+}:
 let
-  inherit (builtins) map concatStringsSep concatMap attrNames;
+  inherit (builtins)
+    map
+    concatStringsSep
+    concatMap
+    attrNames
+    ;
   inherit (lib) mapAttrsToList concatMapStringsSep lowPrio;
   inherit (hyraizyn.astra) typeIs criomOSNeim;
 
-  listenIPs = [ "::1" "127.0.0.1" ];
-  allowedIPs = [ "::1" "127.0.0.1" ];
+  listenIPs = [
+    "::1"
+    "127.0.0.1"
+  ];
+  allowedIPs = [
+    "::1"
+    "127.0.0.1"
+  ];
 
   TLSDNServers = {
     "cloudflare-dns.com" = [
@@ -22,12 +39,11 @@ let
     ];
   };
 
-  mkForwardServerUrls = domain: ipList:
-    map (ip: "${ip}@853#${domain}") ipList;
+  mkForwardServerUrls = domain: ipList: map (ip: "${ip}@853#${domain}") ipList;
 
-  forwardServerUrls = concatMap
-    (name: mkForwardServerUrls name TLSDNServers.${name})
-    (attrNames TLSDNServers);
+  forwardServerUrls = concatMap (name: mkForwardServerUrls name TLSDNServers.${name}) (
+    attrNames TLSDNServers
+  );
 
 in
 {

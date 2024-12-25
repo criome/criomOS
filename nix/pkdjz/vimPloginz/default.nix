@@ -1,4 +1,8 @@
-{ hob, vimUtils, fzf }:
+{
+  hob,
+  vimUtils,
+  fzf,
+}:
 let
   inherit (builtins) mapAttrs;
   inherit (vimUtils) buildVimPluginFrom2Nix;
@@ -9,8 +13,7 @@ let
 
   mkImplaidSpoks = neim: spok: spok;
 
-  spoks = eksplisitSpoks
-    // (mapAttrs (n: s: s) implaidSpoks);
+  spoks = eksplisitSpoks // (mapAttrs (n: s: s) implaidSpoks);
 
   fzf-vim-core = buildVimPluginFrom2Nix {
     pname = "fzf";
@@ -19,21 +22,32 @@ let
   };
 
   ovyraidzIndeks = {
-    fzf-vim = { dependencies = [ fzf-vim-core ]; };
+    fzf-vim = {
+      dependencies = [ fzf-vim-core ];
+    };
   };
 
   forkIndeks = { };
 
-  bildVimPlogin = { neim, self, ovyraidz }:
+  bildVimPlogin =
+    {
+      neim,
+      self,
+      ovyraidz,
+    }:
     let
     in
-    buildVimPluginFrom2Nix ({
-      pname = neim;
-      version = self.shortRev;
-      src = self;
-    } // ovyraidz);
+    buildVimPluginFrom2Nix (
+      {
+        pname = neim;
+        version = self.shortRev;
+        src = self;
+      }
+      // ovyraidz
+    );
 
-  mkSpok = neim: self:
+  mkSpok =
+    neim: self:
     let
       ovyraidz = ovyraidzIndeks.${neim} or { };
     in

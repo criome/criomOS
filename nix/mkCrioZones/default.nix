@@ -1,4 +1,8 @@
-{ kor, lib, proposedCrioSphere }:
+{
+  kor,
+  lib,
+  proposedCrioSphere,
+}:
 let
   inherit (builtins) mapAttrs;
   inherit (lib) evalModules;
@@ -8,7 +12,8 @@ let
   hyraizynOptions = import ./hyraizynOptions.nix;
   mkHyraizynModule = import ./mkHyraizynModule.nix;
 
-  mkCrioZone = neksysNeim: priNeksysNeim:
+  mkCrioZone =
+    neksysNeim: priNeksysNeim:
     let
       astraNeim = priNeksysNeim;
       metastraNeim = neksysNeim;
@@ -37,7 +42,8 @@ let
     in
     crioZone;
 
-  mkNeksysCrioZones = neksysNeim: neksys:
+  mkNeksysCrioZones =
+    neksysNeim: neksys:
     # let priNeksysNeimz = attrNames neksys.astriz; in
     mapAttrs (pnn: pn: mkCrioZone neksysNeim pnn) neksys.astriz;
 

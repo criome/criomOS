@@ -1,4 +1,8 @@
-{ kor, lib, uncheckedCrioSphereProposal }:
+{
+  kor,
+  lib,
+  uncheckedCrioSphereProposal,
+}:
 let
   inherit (lib) evalModules;
 

@@ -1,2 +1,1 @@
-{ self }:
-import (self + /lib)
+{ self }: import (self + /lib)

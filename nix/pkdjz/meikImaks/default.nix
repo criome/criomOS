@@ -1,4 +1,11 @@
-{ kor, lib, src, pkgs, hob, tdlib }:
+{
+  kor,
+  lib,
+  src,
+  pkgs,
+  hob,
+  tdlib,
+}:
 with builtins;
 let
   emacs-overlay = src;
@@ -6,11 +13,14 @@ let
 
   emacs = pkgs.emacs29-pgtk;
   emacsPackages = emacsPackagesFor emacs;
-  inherit (emacsPackages) elpaBuild withPackages melpaBuild
-    trivialBuild;
+  inherit (emacsPackages)
+    elpaBuild
+    withPackages
+    melpaBuild
+    trivialBuild
+    ;
 
-  parseLib = import (emacs-overlay + /parse.nix)
-    { inherit pkgs lib; };
+  parseLib = import (emacs-overlay + /parse.nix) { inherit pkgs lib; };
   inherit (parseLib) parsePackagesFromUsePackage;
 
   customPackages = {
@@ -24,10 +34,9 @@ let
         inherit src;
       };
 
-    magit-delta = emacsPackages.magit-delta.overrideAttrs
-      (attrs: {
-        buildInputs = attrs.buildInputs ++ [ pkgs.delta ];
-      });
+    magit-delta = emacsPackages.magit-delta.overrideAttrs (attrs: {
+      buildInputs = attrs.buildInputs ++ [ pkgs.delta ];
+    });
 
     md-roam =
       let
@@ -37,12 +46,16 @@ let
         pname = "md-roam";
         version = src.shortRev;
         inherit src;
-        packageRequires = with emacsPackages;
-          [ markdown-mode org-roam ];
+        packageRequires = with emacsPackages; [
+          markdown-mode
+          org-roam
+        ];
       };
 
     shen-mode =
-      let src = hob.shen-mode; in
+      let
+        src = hob.shen-mode;
+      in
       melpaBuild {
         pname = "shen-mode";
         inherit src;
@@ -55,20 +68,23 @@ let
         '';
       };
 
-    telega = emacsPackages.telega.overrideAttrs
-      (attrs:
-        let
-          src = hob.telega-el;
-          filteredBuildInputs = filter (pkg: pkg != pkgs.tdlib) attrs.buildInputs;
-        in
-        {
-          inherit src;
-          version = "0.8.150";
-          buildInputs = filteredBuildInputs ++ [ tdlib ];
-        });
+    telega = emacsPackages.telega.overrideAttrs (
+      attrs:
+      let
+        src = hob.telega-el;
+        filteredBuildInputs = filter (pkg: pkg != pkgs.tdlib) attrs.buildInputs;
+      in
+      {
+        inherit src;
+        version = "0.8.150";
+        buildInputs = filteredBuildInputs ++ [ tdlib ];
+      }
+    );
 
     tera-mode =
-      let src = hob.tera-mode; in
+      let
+        src = hob.tera-mode;
+      in
       trivialBuild {
         pname = "tera-mode";
         inherit src;
@@ -77,7 +93,9 @@ let
       };
 
     toodoo =
-      let src = hob.toodoo-el; in
+      let
+        src = hob.toodoo-el;
+      in
       trivialBuild {
         pname = "toodoo";
         inherit src;
@@ -86,7 +104,9 @@ let
       };
 
     xah-fly-keys =
-      let src = hob.xah-fly-keys; in
+      let
+        src = hob.xah-fly-keys;
+      in
       trivialBuild {
         pname = "xah-fly-keys";
         inherit src;
@@ -101,12 +121,11 @@ in
 
 { user, profile }:
 let
-  imaksTheme =
-    if profile.dark then "'modus-vivendi"
-    else "'modus-operandi";
+  imaksTheme = if profile.dark then "'modus-vivendi" else "'modus-operandi";
 
-  initEl = (readFile ./init.el) +
-    ''
+  initEl =
+    (readFile ./init.el)
+    + ''
       (load-theme ${imaksTheme} t)
     '';
 
@@ -114,24 +133,27 @@ let
   launcherCommonEl = readFile ./selector-common.el;
   launcherStyleEl = readFile ./vertico.el;
 
-  packagesEl = concatStringsSep "\n"
-    [ commonPackagesEl launcherCommonEl launcherStyleEl ];
+  packagesEl = concatStringsSep "\n" [
+    commonPackagesEl
+    launcherCommonEl
+    launcherStyleEl
+  ];
 
-  usePackagesNames = kor.unique
-    (parsePackagesFromUsePackage {
-      configText = packagesEl;
-      alwaysEnsure = true;
-    });
+  usePackagesNames = kor.unique (parsePackagesFromUsePackage {
+    configText = packagesEl;
+    alwaysEnsure = true;
+  });
 
-  mkPackageError = name:
+  mkPackageError =
+    name:
     let
       coreEmacsPackageNames = [ "auth-source-pass" ];
       packageIsInCore = elem name coreEmacsPackageNames;
     in
-    if packageIsInCore then null else
-    builtins.trace
-      "Emacs package ${name}, declared wanted with use-package, not found."
-      null;
+    if packageIsInCore then
+      null
+    else
+      builtins.trace "Emacs package ${name}, declared wanted with use-package, not found." null;
 
   findPackage = name: overiddenEmacsPackages.${name} or (mkPackageError name);
   usePackages = map findPackage usePackagesNames;

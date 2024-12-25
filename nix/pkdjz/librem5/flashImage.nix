@@ -1,8 +1,9 @@
-{ src
-, stdenv
-, python3Packages
-, help2man
-, appstream
+{
+  src,
+  stdenv,
+  python3Packages,
+  help2man,
+  appstream,
 }:
 
 stdenv.mkDerivation {

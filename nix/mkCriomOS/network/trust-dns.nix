@@ -1,4 +1,12 @@
-{ config, lib, pkgs, kor, hyraizyn, pkdjz, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  kor,
+  hyraizyn,
+  pkdjz,
+  ...
+}:
 
 let
   inherit (builtins) map;
@@ -23,12 +31,30 @@ let
     stores = {
       type = "forward";
       name_servers = [
-        { socket_addr = "1.1.1.1:853"; protocol = "Udp"; }
-        { socket_addr = "1.1.1.1:853"; protocol = "Tcp"; }
-        { socket_addr = "1.0.0.1:853"; protocol = "Udp"; }
-        { socket_addr = "1.0.0.1:853"; protocol = "Tcp"; }
-        { socket_addr = "2606:4700:4700::1111:853"; protocol = "Tcp"; }
-        { socket_addr = "2606:4700:4700::1001:853"; protocol = "Tcp"; }
+        {
+          socket_addr = "1.1.1.1:853";
+          protocol = "Udp";
+        }
+        {
+          socket_addr = "1.1.1.1:853";
+          protocol = "Tcp";
+        }
+        {
+          socket_addr = "1.0.0.1:853";
+          protocol = "Udp";
+        }
+        {
+          socket_addr = "1.0.0.1:853";
+          protocol = "Tcp";
+        }
+        {
+          socket_addr = "2606:4700:4700::1111:853";
+          protocol = "Tcp";
+        }
+        {
+          socket_addr = "2606:4700:4700::1001:853";
+          protocol = "Tcp";
+        }
       ];
     };
   };
@@ -44,12 +70,11 @@ let
     inherit zones;
   };
 
-  configFile = toFormatFile
-    {
-      neim = "trust-dns-config";
-      valiu = config;
-      preti = true;
-    };
+  configFile = toFormatFile {
+    neim = "trust-dns-config";
+    valiu = config;
+    preti = true;
+  };
 
 in
 {

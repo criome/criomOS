@@ -6,12 +6,12 @@
     attic.url = "github:zhaofengli/attic";
   };
 
-  outputs = inputs@{ self, ... }:
+  outputs =
+    inputs@{ self, ... }:
     let
       localSources =
         let
-          importInput = name: value:
-            import value;
+          importInput = name: value: import value;
           modulePaths = {
             kor = ./nix/kor;
             mkPkgs = ./nix/mkPkgs;
@@ -31,34 +31,51 @@
 
       localHobSources = {
         inherit (localSources) mkWebpage;
-        pkdjz = { HobUyrldz = localSources.pkdjz; };
+        pkdjz = {
+          HobUyrldz = localSources.pkdjz;
+        };
       };
 
       hob = inputs.hob.value // localHobSources;
 
       inherit (hob) flake-utils nixpkgs lib;
-      inherit (localSources) kor neksysNames mkPkgs homeModule mkCriomOS mkUyrld;
+      inherit (localSources)
+        kor
+        neksysNames
+        mkPkgs
+        homeModule
+        mkCriomOS
+        mkUyrld
+        ;
       inherit (lib) optionalAttrs genAttrs hasAttr;
 
       criomOS =
         let
           cleanEvaluation = hasAttr "rev" self;
         in
-        { inherit cleanEvaluation; }
-        // optionalAttrs cleanEvaluation
-          { inherit (self) shortRev rev; };
+        { inherit cleanEvaluation; } // optionalAttrs cleanEvaluation { inherit (self) shortRev rev; };
 
-      mkPkgsAndUyrldFromSystem = system:
+      mkPkgsAndUyrldFromSystem =
+        system:
         let
           pkgs = mkPkgs { inherit nixpkgs lib system; };
-          uyrld = mkUyrld { inherit lib pkgs system hob localSources; };
+          uyrld = mkUyrld {
+            inherit
+              lib
+              pkgs
+              system
+              hob
+              localSources
+              ;
+          };
         in
-        { inherit pkgs uyrld; };
+        {
+          inherit pkgs uyrld;
+        };
 
       perSystemPkgsAndUyrld = eachDefaultSystem mkPkgsAndUyrldFromSystem;
 
-      mkPkgsAndUyrld = system:
-        mapAttrs (name: value: value.${system}) perSystemPkgsAndUyrld;
+      mkPkgsAndUyrld = system: mapAttrs (name: value: value.${system}) perSystemPkgsAndUyrld;
 
       mkDatom = import inputs.mkDatom { inherit kor lib; };
 
@@ -66,7 +83,8 @@
       inherit (kor) arkSistymMap;
       inherit (flake-utils.lib) eachDefaultSystem;
 
-      generateCrioSphereProposalFromName = name:
+      generateCrioSphereProposalFromName =
+        name:
         let
           subCriomeConfig = hob."${name}".NeksysProposal or { };
           explicitNodes = subCriomeConfig.astriz or { };
@@ -75,11 +93,10 @@
         in
         subCriomeConfig // { astriz = allNodes; };
 
-      uncheckedCrioSphereProposal = genAttrs
-        neksysNames
-        generateCrioSphereProposalFromName;
+      uncheckedCrioSphereProposal = genAttrs neksysNames generateCrioSphereProposalFromName;
 
-      mkNeksysDerivations = priNeksysNeim: crioZone:
+      mkNeksysDerivations =
+        priNeksysNeim: crioZone:
         let
           inherit (crioZone) users;
           inherit (crioZone.astra.mycin) ark;
@@ -89,51 +106,74 @@
           hyraizyn = crioZone;
 
           userProfiles = {
-            light = { dark = false; };
-            dark = { dark = true; };
+            light = {
+              dark = false;
+            };
+            dark = {
+              dark = true;
+            };
           };
 
-          mkUserHomz = userNeim: user:
+          mkUserHomz =
+            userNeim: user:
             let
               inherit (uyrld) pkdjz;
 
-              mkProfileHom = profileName: profile:
+              mkProfileHom =
+                profileName: profile:
                 let
                   modules = [ homeModule ];
-                  extraSpecialArgs =
-                    { inherit kor pkdjz uyrld hyraizyn user profile; };
+                  extraSpecialArgs = {
+                    inherit
+                      kor
+                      pkdjz
+                      uyrld
+                      hyraizyn
+                      user
+                      profile
+                      ;
+                  };
                   evalHomeManager = hob.home-manager.lib.homeManagerConfiguration;
-                  evaluation = evalHomeManager
-                    { inherit modules extraSpecialArgs pkgs; };
+                  evaluation = evalHomeManager { inherit modules extraSpecialArgs pkgs; };
                 in
                 evaluation.config.home.activationPackage;
             in
             mapAttrs mkProfileHom userProfiles;
 
-          mkUserImaks = userNeim: user:
+          mkUserImaks =
+            userNeim: user:
             let
               inherit (uyrld.pkdjz) meikImaks;
-              mkProfileImaks = profileName: profile:
-                meikImaks { inherit user profile; };
+              mkProfileImaks = profileName: profile: meikImaks { inherit user profile; };
             in
             mapAttrs mkProfileImaks userProfiles;
 
         in
         {
-          os = mkCriomOS
-            { inherit criomOS kor uyrld hyraizyn homeModule hob; };
+          os = mkCriomOS {
+            inherit
+              criomOS
+              kor
+              uyrld
+              hyraizyn
+              homeModule
+              hob
+              ;
+          };
           hom = mapAttrs mkUserHomz users;
           imaks = mapAttrs mkUserImaks users;
         };
 
-      mkEachCrioZoneDerivations = crioZones:
+      mkEachCrioZoneDerivations =
+        crioZones:
         let
-          mkNeksysDerivationIndex = neksysNeim: neksysPrineksysIndeks:
-            mapAttrs mkNeksysDerivations neksysPrineksysIndeks;
+          mkNeksysDerivationIndex =
+            neksysNeim: neksysPrineksysIndeks: mapAttrs mkNeksysDerivations neksysPrineksysIndeks;
         in
         mapAttrs mkNeksysDerivationIndex crioZones;
 
-      mkNixApiOutputsPerSystem = system:
+      mkNixApiOutputsPerSystem =
+        system:
         let
           pkgsAndUyrld = mkPkgsAndUyrld system;
           inherit (pkgsAndUyrld) pkgs uyrld;
@@ -143,16 +183,21 @@
             # TODO
           };
 
-          mkHobOutput = name: src:
-            symlinkJoin { inherit name; paths = [ src.outPath ]; };
+          mkHobOutput =
+            name: src:
+            symlinkJoin {
+              inherit name;
+              paths = [ src.outPath ];
+            };
 
           hobOutputs = mapAttrs mkHobOutput hob;
 
-          mkSpokFarmEntry = name: spok:
-            { inherit name; path = spok.outPath; };
+          mkSpokFarmEntry = name: spok: {
+            inherit name;
+            path = spok.outPath;
+          };
 
-          allMeinHobOutputs = linkFarm "hob"
-            (kor.mapAttrsToList mkSpokFarmEntry hobOutputs);
+          allMeinHobOutputs = linkFarm "hob" (kor.mapAttrsToList mkSpokFarmEntry hobOutputs);
 
           packages = uyrld // {
             inherit pkgs;
@@ -163,7 +208,9 @@
           tests = import inputs.tests { inherit lib mkDatom; };
 
         in
-        { inherit tests packages devShell; };
+        {
+          inherit tests packages devShell;
+        };
 
       perSystemAllOutputs = eachDefaultSystem mkNixApiOutputsPerSystem;
 
@@ -171,7 +218,8 @@
       proposedCrioZones = localSources.mkCrioZones { inherit kor lib proposedCrioSphere; };
 
     in
-    perSystemAllOutputs // {
+    perSystemAllOutputs
+    // {
       crioZones = mkEachCrioZoneDerivations proposedCrioZones;
     };
 }

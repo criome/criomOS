@@ -1,4 +1,12 @@
-{ kor, lib, user, pkgs, pkdjz, uyrld, ... }:
+{
+  kor,
+  lib,
+  user,
+  pkgs,
+  pkdjz,
+  uyrld,
+  ...
+}:
 let
   inherit (builtins) readFile toJSON;
   inherit (kor) optionalString optionals;
@@ -30,44 +38,47 @@ let
     sbcl
   ];
 
-  niksDevPackages = with pkgs; [
-    qrencode
-    jmtpfs
-    # start('bash')
-    nix-prefetch-git
-    # start('pythonPackages')
-    ranger
-    # C/C++
-    binutils
-    openssh
-    nginx
-    sdcv # cli dictionary
-    jq
-    djvulibre
-    # NodeJS
-    # tokenaizdWrangler
-    #== go
-    ghq
-    elvish
-    lf
-    tokenizedWrappedHub
-    #== rust
-    watchexec
-    zola
-    git-series
-    tree-sitter
-    gitAndTools.gitui
-    # Python
-    # pkdjz.mach-nix.package # broken
-    uyrld.kibord.kpBootCli
-    # Manuals
-    unbound.man
-  ] ++ (with nodePackages; [
-    stylelint
-    postcss
-    node2nix
-    prettier
-  ]);
+  niksDevPackages =
+    with pkgs;
+    [
+      qrencode
+      jmtpfs
+      # start('bash')
+      nix-prefetch-git
+      # start('pythonPackages')
+      ranger
+      # C/C++
+      binutils
+      openssh
+      nginx
+      sdcv # cli dictionary
+      jq
+      djvulibre
+      # NodeJS
+      # tokenaizdWrangler
+      #== go
+      ghq
+      elvish
+      lf
+      tokenizedWrappedHub
+      #== rust
+      watchexec
+      zola
+      git-series
+      tree-sitter
+      gitAndTools.gitui
+      # Python
+      # pkdjz.mach-nix.package # broken
+      uyrld.kibord.kpBootCli
+      # Manuals
+      unbound.man
+    ]
+    ++ (with nodePackages; [
+      stylelint
+      postcss
+      node2nix
+      prettier
+    ]);
 
   graphicalPackages = with pkgs; [
     ledger-live-desktop
@@ -84,7 +95,7 @@ kor.mkIf saizAtList.med {
       settings = {
         cmd_duration = {
           show_notifications = true;
-          min_time_to_notify = 10000; #TODO('requires build flag')
+          min_time_to_notify = 10000; # TODO('requires build flag')
         };
         git_status = {
           disabled = true;
@@ -94,25 +105,27 @@ kor.mkIf saizAtList.med {
   };
 
   home = {
-    packages = with pkgs; [
-      # start('bash')
-      taskwarrior3
-      # start('pythonPackages')
-      yt-dlp
-      # ocrmypdf
-      # C/C++
-      imagemagick
-      opusTools
-      mediainfo
-      #== go
-      gopass
-      git-bug
-      lazygit
-      #== rust
-      spotify-player
-    ]
-    ++ graphicalPackages
-    ++ optionals izNiksDev (niksDevPackages ++ lispDevPackages);
+    packages =
+      with pkgs;
+      [
+        # start('bash')
+        taskwarrior3
+        # start('pythonPackages')
+        yt-dlp
+        # ocrmypdf
+        # C/C++
+        imagemagick
+        opusTools
+        mediainfo
+        #== go
+        gopass
+        git-bug
+        lazygit
+        #== rust
+        spotify-player
+      ]
+      ++ graphicalPackages
+      ++ optionals izNiksDev (niksDevPackages ++ lispDevPackages);
 
     file = {
       # ".config/jesseduffield/lazygit/config.yml".text = { };
@@ -147,8 +160,7 @@ kor.mkIf saizAtList.med {
         -f 'bestvideo[ext=webm]+bestaudio[ext=webm]/best[ext=webm]/best'
       '';
 
-      ".config/ranger/rc.conf".text = '' ''
-        + (optionalString iuzColemak readFile ./colemak.conf);
+      ".config/ranger/rc.conf".text = '''' + (optionalString iuzColemak readFile ./colemak.conf);
       # end('pythonConfigs')
 
     };

@@ -9,30 +9,46 @@ let
 
     bildNvimPlogin = {
       lamdy = import ./bildNvimPlogin;
-      modz = [ "pkgs" "pkdjz" ];
+      modz = [
+        "pkgs"
+        "pkdjz"
+      ];
       self = null;
     };
 
     home-manager = {
       lamdy = import ./home-manager;
-      modz = [ "lib" "pkgs" "hob" ];
+      modz = [
+        "lib"
+        "pkgs"
+        "hob"
+      ];
     };
 
     ivalNixos = {
       lamdy = import ./ivalNixos;
-      modz = [ "lib" "pkgsSet" ];
+      modz = [
+        "lib"
+        "pkgsSet"
+      ];
       self = hob.nixpkgs;
     };
 
     kreitOvyraidz = {
       lamdy = import ./kreitOvyraidz;
-      modz = [ "pkgs" "lib" ];
+      modz = [
+        "pkgs"
+        "lib"
+      ];
       self = null;
     };
 
     kynvyrt = {
       lamdy = import ./kynvyrt;
-      modz = [ "pkgs" "uyrld" ];
+      modz = [
+        "pkgs"
+        "uyrld"
+      ];
       self = null;
     };
 
@@ -46,11 +62,17 @@ let
       lamdy = import ./librem5/flashImage.nix;
     };
 
-    mach-nix = { lamdy = import ./mach-nix; };
+    mach-nix = {
+      lamdy = import ./mach-nix;
+    };
 
     meikImaks = {
       lamdy = import ./meikImaks;
-      modz = [ "pkgsSet" "hob" "pkdjz" ];
+      modz = [
+        "pkgsSet"
+        "hob"
+        "pkdjz"
+      ];
       self = hob.emacs-overlay;
     };
 
@@ -60,13 +82,19 @@ let
 
     nvimLuaPloginz = {
       lamdy = import ./nvimPloginz/lua.nix;
-      modz = [ "hob" "pkdjz" ];
+      modz = [
+        "hob"
+        "pkdjz"
+      ];
       self = null;
     };
 
     nvimPloginz = {
       lamdy = import ./nvimPloginz;
-      modz = [ "hob" "pkdjz" ];
+      modz = [
+        "hob"
+        "pkdjz"
+      ];
       self = null;
     };
 
@@ -77,13 +105,20 @@ let
 
     nix-dev = {
       lamdy = import ./nix;
-      modz = [ "pkgs" "pkdjz" ];
+      modz = [
+        "pkgs"
+        "pkdjz"
+      ];
       self = hob.nix.maisiliym.dev;
     };
 
     pkgsNvimPloginz = {
       lamdy = import ./pkgsNvimPloginz;
-      modz = [ "pkgsSet" "lib" "pkdjz" ];
+      modz = [
+        "pkgsSet"
+        "lib"
+        "pkdjz"
+      ];
       self = hob.nixpkgs;
     };
 
@@ -111,23 +146,37 @@ let
 
     niks = {
       lamdy = import ./niks;
-      modz = [ "pkgs" "pkdjz" ];
+      modz = [
+        "pkgs"
+        "pkdjz"
+      ];
     };
 
     obs-ndi = {
-      modz = [ "pkgsSet" "pkgs" "pkdjz" ];
+      modz = [
+        "pkgsSet"
+        "pkgs"
+        "pkdjz"
+      ];
       src = null;
       lamdy = import ./obs-ndi;
     };
 
     videocut = {
       lamdy = import ./videocut;
-      modz = [ "pkgs" "pkdjz" ];
+      modz = [
+        "pkgs"
+        "pkdjz"
+      ];
     };
 
     vimPloginz = {
       lamdy = import ./vimPloginz;
-      modz = [ "pkgs" "pkdjz" "hob" ];
+      modz = [
+        "pkgs"
+        "pkdjz"
+        "hob"
+      ];
       self = null;
     };
   };

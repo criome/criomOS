@@ -1,11 +1,32 @@
-{ config, lib, metastrizSpiciz, ... }:
+{
+  config,
+  lib,
+  metastrizSpiciz,
+  ...
+}:
 let
   inherit (lib) mkOption;
-  inherit (lib.types) enum str attrsOf submodule nullOr bool int
-    listOf attrs;
+  inherit (lib.types)
+    enum
+    str
+    attrsOf
+    submodule
+    nullOr
+    bool
+    int
+    listOf
+    attrs
+    ;
 
-  inherit (metastrizSpiciz) metastriNeimz astriSpiciz
-    magnytiud sistymz komynUserOptions mycinSpici IoOptions;
+  inherit (metastrizSpiciz)
+    metastriNeimz
+    astriSpiciz
+    magnytiud
+    sistymz
+    komynUserOptions
+    mycinSpici
+    IoOptions
+    ;
 
   astriOptions = {
     neim = mkOption {
@@ -146,7 +167,9 @@ let
       };
 
       exAstriz = mkOption {
-        type = attrsOf (submodule { options = astriOptions; });
+        type = attrsOf (submodule {
+          options = astriOptions;
+        });
       };
 
       users = mkOption {

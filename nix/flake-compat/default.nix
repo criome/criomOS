@@ -1,16 +1,21 @@
 let
   kor = import ../kor;
   inherit (kor) importJSON mesydj;
-  getLockFileInput = lockFile: inputNeim:
+  getLockFileInput =
+    lockFile: inputNeim:
     let
       lockDatom = importJSON lockFile;
       lockedInput = lockDatom.nodes.${inputNeim}.locked;
       inherit (lockedInput) type;
     in
-    assert mesydj (type == "github")
-      "getLockFileInput does not support `${type}` type";
+    assert mesydj (type == "github") "getLockFileInput does not support `${type}` type";
     let
-      inherit (lockedInput) owner repo narHash rev;
+      inherit (lockedInput)
+        owner
+        repo
+        narHash
+        rev
+        ;
     in
     fetchTarball {
       url = "https://github.com/${owner}/${repo}/archive/${rev}.tar.gz";

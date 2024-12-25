@@ -1,7 +1,26 @@
-{ kor, pkgs, pkdjz, user, config, profile, hyraizyn, ... }:
+{
+  kor,
+  pkgs,
+  pkdjz,
+  user,
+  config,
+  profile,
+  hyraizyn,
+  ...
+}:
 let
-  inherit (kor) mkIf optionals optionalString matcSaiz;
-  inherit (user.spinyrz) saizAtList iuzColemak izNiksDev izSemaDev;
+  inherit (kor)
+    mkIf
+    optionals
+    optionalString
+    matcSaiz
+    ;
+  inherit (user.spinyrz)
+    saizAtList
+    iuzColemak
+    izNiksDev
+    izSemaDev
+    ;
   inherit (user) saiz;
   inherit (profile) dark;
   inherit (pkgs) writeText;
@@ -24,7 +43,9 @@ let
     inherit iuzColemak optionalString;
     waybarEksek = nixProfileExec "waybar";
     swaylockEksek = nixProfileExec "swaylock";
-    browser = matcSaiz saiz "" termBrowser "${nixProfileExec "qutebrowser"}" "${nixProfileExec "qutebrowser"}";
+    browser =
+      matcSaiz saiz "" termBrowser "${nixProfileExec "qutebrowser"}"
+        "${nixProfileExec "qutebrowser"}";
     launcher = "${nixProfileExec "wofi"} --show drun";
     shellTerm = shellLaunch "export SHELL=${zshEksek}; exec ${terminal} ${zshEksek}";
   };
@@ -35,9 +56,12 @@ in
 mkIf saizAtList.min {
   wayland.windowManager.sway = {
     enable = true;
-    wrapperFeatures = { base = true; gtk = true; };
+    wrapperFeatures = {
+      base = true;
+      gtk = true;
+    };
     systemd.enable = true;
-    extraSessionCommands = '' '';
+    extraSessionCommands = '''';
     config = null;
     extraConfig = swayConfigString;
   };

@@ -1,4 +1,11 @@
-{ criomOS, homeModule, kor, uyrld, hyraizyn, hob }:
+{
+  criomOS,
+  homeModule,
+  kor,
+  uyrld,
+  hyraizyn,
+  hob,
+}:
 let
   inherit (kor) optional;
   inherit (uyrld) pkdjz home-manager;
@@ -19,11 +26,12 @@ let
   edjModule = import ./edj;
 
   disksModule =
-    if iuzPodModule
-    then import ./pod.nix
-    else if iuzIsoModule
-    then import ./liveIso.nix
-    else import ./priInstyld.nix;
+    if iuzPodModule then
+      import ./pod.nix
+    else if iuzIsoModule then
+      import ./liveIso.nix
+    else
+      import ./priInstyld.nix;
 
   metylModule = import ./metyl;
 
@@ -35,14 +43,23 @@ let
     networkModule
   ];
 
-  nixosModules = beisModules
+  nixosModules =
+    beisModules
     ++ (optional iuzEdjModule edjModule)
     ++ (optional useRouterModule ./router)
     ++ (optional iuzIsoModule home-manager.nixosModules.default)
     ++ (optional iuzMetylModule metylModule);
 
   nixosArgs = {
-    inherit kor uyrld pkdjz hyraizyn criomOS homeModule hob;
+    inherit
+      kor
+      uyrld
+      pkdjz
+      hyraizyn
+      criomOS
+      homeModule
+      hob
+      ;
     konstynts = import ./konstynts.nix;
   };
 
@@ -57,5 +74,4 @@ let
   bildNiksOS = ivaliueicyn.config.system.build.toplevel;
 
 in
-if iuzIsoModule then bildNiksOSIso
-else bildNiksOS
+if iuzIsoModule then bildNiksOSIso else bildNiksOS

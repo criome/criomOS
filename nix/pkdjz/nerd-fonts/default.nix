@@ -1,8 +1,19 @@
-{ kor, stdenv, fetchzip, fd }:
+{
+  kor,
+  stdenv,
+  fetchzip,
+  fd,
+}:
 let
   version = "2.1.0";
 
-  mkNerdFont = { fontNeim, regexMatch ? "", sha256, globExcludes ? [ ] }:
+  mkNerdFont =
+    {
+      fontNeim,
+      regexMatch ? "",
+      sha256,
+      globExcludes ? [ ],
+    }:
     stdenv.mkDerivation {
       name = "${fontNeim}-nerdfont-${version}";
 
@@ -17,10 +28,9 @@ let
       installPhase =
         let
           regex = if (regexMatch == "") then ".*" else regexMatch;
-          excludes = kor.optionalString (globExcludes != [ ])
-            (kor.concatMapStringsSep " "
-              (x: "--exclude '${x}'")
-              globExcludes);
+          excludes = kor.optionalString (globExcludes != [ ]) (
+            kor.concatMapStringsSep " " (x: "--exclude '${x}'") globExcludes
+          );
         in
         ''
           IFS="

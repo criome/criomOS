@@ -23,11 +23,9 @@ in
 
     yggdrasil = rec {
       subDirName = "yggdrasil";
-      stateDirectory = systemd.dynamicUserStateDirectory
-        + "/" + subDirName;
+      stateDirectory = systemd.dynamicUserStateDirectory + "/" + subDirName;
 
-      runtimeDirectory = systemd.runtimeDirectory
-        + "/" + subDirName;
+      runtimeDirectory = systemd.runtimeDirectory + "/" + subDirName;
 
       preCriomeJson = runtimeDirectory + "/preCriome.json";
       preCriadJson = stateDirectory + "/preCriad.json";
