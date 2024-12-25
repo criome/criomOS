@@ -90,7 +90,7 @@ in
         rtl8192su-firmware
         zd1211fw
         alsa-firmware
-        openelec-dvb-firmware
+        libreelec-dvb-firmware
       ]
       ++ optional computerIs.rpi3B raspberrypiWirelessFirmware
       ++ optional requiresSofFirmware sof-firmware;

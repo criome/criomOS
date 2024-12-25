@@ -61,7 +61,7 @@ let
   };
 
   fontDeriveicynz =
-    [ pkgs.noto-fonts-cjk ]
+    [ pkgs.noto-fonts-cjk-sans ]
     ++ (optionals saizAtList.med (
       with pkgs;
       [
