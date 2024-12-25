@@ -208,7 +208,7 @@ in
       autoRepeatDelay = 200;
       autoRepeatInterval = 28;
 
-      digimend.enable = !typeIs.sentyr;
+      digimend.enable = false; # !typeIs.sentyr; # Broken
     };
 
     logind = {
