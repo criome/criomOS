@@ -82,6 +82,7 @@ in
       uyrld.skrips.root
       tcpdump
       librist
+      openssh
     ];
 
     interactiveShellInit = optionalString iuzColemak "stty -ixon";
