@@ -64,10 +64,6 @@ in
 
     decoration {
       rounding = 0
-      drop_shadow = yes
-      shadow_range = 4
-      shadow_render_power = 3
-      col.shadow = rgba(1a1a1aee)
       fullscreen_opacity = 0.9999999
       dim_strength = 0.25
     }
@@ -193,9 +189,8 @@ in
           command = lockScreen;
         }
       ];
-      events =
-        [
-        ];
+      events = [
+      ];
     };
   };
 }
