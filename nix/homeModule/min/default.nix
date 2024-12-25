@@ -127,7 +127,6 @@ let
     adwaita-qt
     qgnomeplatform
     waylandQtpass
-    qtox
     waylandPass
     # helvum # Broken? Pipewire nodes UI
     coppwr # Pipewire Nodes UI
@@ -141,7 +140,6 @@ let
       ]
     ))
     hunspellDicts.en-us-large
-    tor-browser-bundle-bin
   ];
 
   brootConfig = toJSON { };
