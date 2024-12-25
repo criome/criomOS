@@ -451,6 +451,21 @@
         "type": "github"
       }
     },
+    "goldragon_2": {
+      "locked": {
+        "lastModified": 1663666582,
+        "narHash": "sha256-f5GyGuLH9W7o7aK//9X0oa2NgFFt5ifpDo4DV++244w=",
+        "owner": "LiGoldragon",
+        "repo": "goldragon",
+        "rev": "7da4ce4732061b00b06dd6d5df691d02210bccfe",
+        "type": "github"
+      },
+      "original": {
+        "owner": "LiGoldragon",
+        "repo": "goldragon",
+        "type": "github"
+      }
+    },
     "googletest": {
       "flake": false,
       "locked": {
@@ -530,7 +545,7 @@
         "flake-parts": "flake-parts_2",
         "flake-registry": "flake-registry",
         "flake-utils": "flake-utils",
-        "goldragon": "goldragon",
+        "goldragon": "goldragon_2",
         "goldragonWebpage": "goldragonWebpage",
         "helix": "helix",
         "home-manager": "home-manager",
@@ -841,6 +856,21 @@
         "type": "github"
       }
     },
+    "maisiliym_2": {
+      "locked": {
+        "lastModified": 1735157035,
+        "narHash": "sha256-DwFlDsm5tAOT9kvgY6Sr70wEenhidispW8vlAACd+xc=",
+        "owner": "LiGoldragon",
+        "repo": "maisiliym",
+        "rev": "d47db5e8dfbf14bb5436bad9170a1e7f91c576bc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "LiGoldragon",
+        "repo": "maisiliym",
+        "type": "github"
+      }
+    },
     "md-roam": {
       "flake": false,
       "locked": {
@@ -1134,7 +1164,10 @@
     "root": {
       "inputs": {
         "attic": "attic",
-        "hob": "hob"
+        "goldragon": "goldragon",
+        "hob": "hob",
+        "maisiliym": "maisiliym_2",
+        "seahawk": "seahawk_2"
       }
     },
     "rust-overlay": {
@@ -1202,6 +1235,21 @@
       "original": {
         "owner": "AnaSeahawk",
         "repo": "website",
+        "type": "github"
+      }
+    },
+    "seahawk_2": {
+      "locked": {
+        "lastModified": 1667373205,
+        "narHash": "sha256-6Uk1fgv0p8bTdnTPqBAoFHvfHkE6DiITRlpPuHJqacs=",
+        "owner": "criome",
+        "repo": "seahawk",
+        "rev": "b0da7be1ab2eee592db9de192288b8dc2850dd3a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "criome",
+        "repo": "seahawk",
         "type": "github"
       }
     },
