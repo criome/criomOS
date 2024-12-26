@@ -1,5 +1,6 @@
 {
   kor,
+  lib,
   pkgs,
   pkdjz,
   user,
@@ -11,11 +12,13 @@
 }:
 let
   inherit (builtins) toString readFile toJSON;
+  inherit (lib) optionalAttrs;
   inherit (kor)
     optionalString
     optionals
     mkIf
     optional
+    importJSON
     ;
   inherit (pkdjz) kynvyrt;
   inherit (hyraizyn) astra;
@@ -33,6 +36,8 @@ let
   inherit (pkgs) writeText;
 
   homeDir = config.home.homeDirectory;
+
+  colemakZedKeys = importJSON ./zed_colemak_keybindings.json;
 
   fzfColemakBinds = import ./fzfColemak.nix;
 
@@ -389,8 +394,10 @@ mkIf saizAtList.min {
       extraPackages = with pkgs; [
         nixd
       ];
-      userKeymaps = { };
-      userSettings = { };
+      userKeymaps = optionalAttrs iuzColemak colemakZedKeys;
+      userSettings = {
+        vim_mode = true;
+      };
       extensions = [ ];
     };
 
