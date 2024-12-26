@@ -514,6 +514,9 @@ mkIf saizAtList.min {
           defaultMailer = "evolution.desktop";
         in
         {
+          "x-scheme-handler/tg" = "org.telegram.desktop.desktop";
+          "x-scheme-handler/tonsite" = "org.telegram.desktop.desktop";
+
           "application/epub+zip" = "calibre-ebook-viewer.desktop";
           "application/pdf" = "org.pwmt.zathura-pdf-mupdf.desktop";
 
