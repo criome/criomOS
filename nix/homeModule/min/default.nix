@@ -395,9 +395,15 @@ mkIf saizAtList.min {
         nixd
       ];
       userKeymaps = optionalAttrs iuzColemak colemakZedKeys;
-      userSettings = {
-        vim_mode = true;
-      };
+      userSettings =
+        let
+          darkTheme = "base16-bright";
+          lightTheme = "base16-selenized-white";
+        in
+        {
+          theme = if dark then darkTheme else lightTheme;
+          vim_mode = true;
+        };
       extensions = [ ];
     };
 
