@@ -1,0 +1,26 @@
+[atom]
+id = "CriomOS"
+version = "0.1.0"
+
+[features]
+default = []
+
+[local.CriomOS-lib]
+path = "CriomOS-lib@.toml"
+
+[fetch.nixpkgs]
+name = "nixpkgs"
+flake = true
+
+[fetch.nixos-lib]
+name = "nixpkgs"
+subdir = "nixos/lib"
+import = true
+
+[fetch.lib]
+name = "nixpkgs"
+subdir = "lib"
+import = true
+
+[backend.nix]
+fetcher = "npins"
