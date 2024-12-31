@@ -388,6 +388,13 @@ mkIf saizAtList.min {
       settings = { };
     };
 
+    jujutsu = {
+      enable = true;
+      settings = {
+        email = spinyrz.emailAddress;
+      };
+    };
+
     zed-editor = {
       enable = true;
       package = pkgs.zed-editor;
@@ -501,15 +508,6 @@ mkIf saizAtList.min {
   xdg = {
     configFile = {
       "fontconfig/conf.d/10-niksIuzyr-fonts.conf".text = mkFontConf;
-
-      "jj/config.toml".source = kynvyrt {
-        neim = "jujutsuConfigToml";
-        format = "toml";
-        valiu.user = {
-          name = neim;
-          email = matrixID;
-        };
-      };
     };
 
     mimeApps = {
