@@ -27,6 +27,8 @@ let
     computerIs
     ;
 
+  enableWaydroid = saizAtList.max && !typeIs.router;
+
   # TODO
   hasTouchpad = true;
 
@@ -73,8 +75,14 @@ let
   useVaapiIntel = true;
   hasOpenClSupport = saizAtList.max;
 
+  waydroidPackages = with pkgs; [
+    wl-clipboard
+    python3Packages.pyclip
+  ];
+
   intelGraphicsPackages =
-    optional useVaapiIntel pkgs.vaapiIntel
+    optionals enableWaydroid waydroidPackages
+    ++ optional useVaapiIntel pkgs.vaapiIntel
     ++ optional hasOpenClSupport pkgs.intel-compute-runtime;
 
 in
@@ -391,9 +399,8 @@ in
   };
 
   virtualisation = {
-    libvirtd = {
-      enable = (saizAtList.max && !typeIs.router);
-    };
+    libvirtd.enable = (saizAtList.max && !typeIs.router);
+    waydroid.enable = enableWaydroid;
     spiceUSBRedirection.enable = saizAtList.max;
   };
 }
