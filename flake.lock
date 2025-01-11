@@ -549,6 +549,7 @@
         "goldragonWebpage": "goldragonWebpage",
         "helix": "helix",
         "home-manager": "home-manager",
+        "jujutsu-el": "jujutsu-el",
         "kibord": "kibord",
         "lib": "lib",
         "lojix": "lojix",
@@ -580,11 +581,11 @@
         "xdg-desktop-portal-hyprland": "xdg-desktop-portal-hyprland"
       },
       "locked": {
-        "lastModified": 1735084126,
-        "narHash": "sha256-1gkFraZ5DYEkVpcYVZHwLvKiuJqRX/MT/7r/i4Js0ls=",
+        "lastModified": 1736609012,
+        "narHash": "sha256-3FNGCjKbqlEgpvSV4iA8wzAwLMIR7FREW+KbkmcdVZ4=",
         "owner": "criome",
         "repo": "hob",
-        "rev": "c76b68608f4aaf2141391bf8c0aa7bf9191a05d8",
+        "rev": "b2a264be69f6422d25978c54a4f3b4dcf9ff9c1e",
         "type": "github"
       },
       "original": {
@@ -725,6 +726,22 @@
       "original": {
         "owner": "hyprwm",
         "repo": "hyprwayland-scanner",
+        "type": "github"
+      }
+    },
+    "jujutsu-el": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1734385248,
+        "narHash": "sha256-z7rPpAjHL93tmqBLMYQyC8W4pWNVwRit/oAouiJFfUc=",
+        "owner": "bennyandresen",
+        "repo": "jujutsu.el",
+        "rev": "8d40c273a3c74c771a48efa963ed16154f94cfdf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bennyandresen",
+        "repo": "jujutsu.el",
         "type": "github"
       }
     },

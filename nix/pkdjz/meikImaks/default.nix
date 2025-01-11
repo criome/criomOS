@@ -34,6 +34,21 @@ let
         inherit src;
       };
 
+    jujutsu =
+      let
+        src = hob.jujutsu-el;
+      in
+      trivialBuild {
+        pname = "jujutsu-el";
+        version = src.shortRev;
+        inherit src;
+        packageRequires = with emacsPackages; [
+          ht
+          dash
+          s
+        ];
+      };
+
     magit-delta = emacsPackages.magit-delta.overrideAttrs (attrs: {
       buildInputs = attrs.buildInputs ++ [ pkgs.delta ];
     });
