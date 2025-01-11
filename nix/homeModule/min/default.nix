@@ -391,7 +391,10 @@ mkIf saizAtList.min {
     jujutsu = {
       enable = true;
       settings = {
-        email = spinyrz.emailAddress;
+        user = {
+          name = neim;
+          email = spinyrz.emailAddress;
+        };
       };
     };
 
