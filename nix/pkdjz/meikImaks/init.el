@@ -6,6 +6,7 @@
 (recentf-mode 1)
 (run-at-time nil (* 5 60) 'recentf-save-list)
 (custom-set-variables
+ '(make-backup-files nil)
  '(recentf-max-menu-items 1024)
  '(recentf-max-saved-items 10024)
  '(inferior-lisp-program "sbcl")
