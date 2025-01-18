@@ -377,17 +377,25 @@ mkIf saizAtList.min {
         key = gitSigningKey;
         signByDefault = true;
       };
+
       extraConfig = {
         pull.rebase = true;
         init.defaultBranch = "main";
         github.user = githubId;
         ghq.root = "/git";
         hub.protocol = "ssh";
+
         diff = {
           tool = diffTool;
           guitool = diffTool;
         };
+
         merge.tool = diffTool;
+
+        "mergetool \"${diffTool}\"" = {
+          cmd = ''emerge -local "$LOCAL" -remote "$REMOTE" -base "$BASE" -merged "$MERGED"'';
+          trustExitCode = true;
+        };
       };
     };
 
