@@ -10,10 +10,15 @@ let
   inherit (pkdjz) meikImaks;
   package = meikImaks { inherit user profile; };
 
+  extraPackages = with pkgs; [
+    nil
+    emacsclient-commands
+  ];
+
 in
 {
   home = {
-    packages = [ package ] ++ (with pkgs; [ nil ]);
+    packages = [ package ] ++ extraPackages;
 
     sessionVariables = {
       EDITOR = "emacsclient -c";
