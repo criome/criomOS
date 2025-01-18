@@ -37,6 +37,9 @@ let
 
   homeDir = config.home.homeDirectory;
 
+  # TODO
+  diffTool = "emerge";
+
   colemakZedKeys = importJSON ./zed_colemak_keybindings.json;
 
   fzfColemakBinds = import ./fzfColemak.nix;
@@ -380,6 +383,11 @@ mkIf saizAtList.min {
         github.user = githubId;
         ghq.root = "/git";
         hub.protocol = "ssh";
+        diff = {
+          tool = diffTool;
+          guitool = diffTool;
+        };
+        merge.tool = diffTool;
       };
     };
 
@@ -395,6 +403,7 @@ mkIf saizAtList.min {
           name = neim;
           email = spinyrz.emailAddress;
         };
+        ui.diff-editor = diffTool;
       };
     };
 
