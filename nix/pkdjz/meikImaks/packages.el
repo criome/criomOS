@@ -38,6 +38,8 @@
 (use-package magit-delta
   :hook (magit-mode . magit-delta-mode))
 
+(use-package difftastic)
+
 (use-package with-editor
   :hook
   (eshell-mode . with-editor-export-editor))

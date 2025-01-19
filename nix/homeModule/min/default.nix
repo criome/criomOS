@@ -190,6 +190,7 @@ let
     # Shell
     shfmt
     # Other
+    difftastic
     tokei # Lines of code
   ];
 
