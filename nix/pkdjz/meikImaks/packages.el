@@ -27,6 +27,8 @@
 (use-package nixfmt
   :hook (nix-ts-mode . nixfmt-on-save-mode))
 
+(use-package justl)
+
 (use-package json-mode)
 
 (use-package haskell-mode)
