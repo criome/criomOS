@@ -301,7 +301,7 @@ mkIf saizAtList.min {
       enable = true;
       provider = "geoclue2";
       temperature = {
-        day = 6000;
+        day = 3500;
         night = 2700;
       };
     };
