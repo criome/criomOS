@@ -397,6 +397,11 @@ mkIf saizAtList.min {
           name = neim;
           email = spinyrz.emailAddress;
         };
+        signing = {
+          sign-all = true;
+          backend = "gpg";
+          key = gitSigningKey;
+        };
       };
     };
 
