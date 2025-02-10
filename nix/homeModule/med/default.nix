@@ -34,6 +34,18 @@ let
     ln -s ${tokenizedHub}/bin/hub $out/bin/
   '';
 
+  tokenizedGhCli = pkgs.writeScriptBin "gh" ''
+    #!${mksh}/bin/mksh
+    export GH_TOKEN=''${GITHUB_TOKEN:-''$(${pkgs.gopass}/bin/gopass show -o github.com/token)}
+    exec "${pkgs.gh}/bin/gh" "$@"
+  '';
+
+  tokenizedWrappedGhCli = pkgs.runCommand "gh" { } ''
+    mkdir -p $out/bin
+    ln -s ${pkgs.gh}/share $out/
+    ln -s ${tokenizedGhCli}/bin/gh $out/bin/
+  '';
+
   lispDevPackages = with pkgs; [
     sbcl
   ];
@@ -61,6 +73,7 @@ let
       elvish
       lf
       tokenizedWrappedHub
+      tokenizedWrappedGhCli
       #== rust
       watchexec
       zola
