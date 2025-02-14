@@ -528,6 +528,8 @@ mkIf saizAtList.min {
           defaultMailer = "evolution.desktop";
         in
         {
+          "application/zip" = "org.gnome.FileRoller.desktop";
+
           "x-scheme-handler/tg" = "org.telegram.desktop.desktop";
           "x-scheme-handler/tonsite" = "org.telegram.desktop.desktop";
 
