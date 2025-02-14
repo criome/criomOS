@@ -133,6 +133,11 @@ in
     bind = $SUPER_SHIFT, ${left}, splitratio, -0.05
     bind = $SUPER_SHIFT, ${right}, splitratio, +0.05
 
+    bind = $SUPER, Tab, cyclenext           # change focus to another window
+    bind = $SUPER, Tab, bringactivetotop     # bring it to the top
+    bind = $SUPER_SHIFT, tab, cyclenext, prev
+    bind = $SUPER_SHIFT, Tab, bringactivetotop
+
     # bind = $SUPER, H, exec, warpd --hint
     # bind = $SUPER, D, exec, warpd --normal
     # bind = $SUPER, G, exec, warpd --grid
