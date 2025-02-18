@@ -37,6 +37,7 @@ let
 in
 {
   hardware = {
+    bluetooth.enable = true;
     graphics.enable32Bit = saizAtList.max;
     pulseaudio.enable = false;
   };
@@ -80,6 +81,8 @@ in
 
   services = {
     avahi.enable = saizAtList.min;
+
+    blueman.enable = saizAtList.med;
 
     power-profiles-daemon.enable = false;
 
