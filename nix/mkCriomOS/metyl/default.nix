@@ -168,6 +168,9 @@ in
   users.groups.plugdev = { };
 
   services = {
+    # TODO
+    fwupd.enable = true;
+
     geoclue2 = {
       enable = saizAtList.min;
       enableDemoAgent = lib.mkOverride 0 true;
